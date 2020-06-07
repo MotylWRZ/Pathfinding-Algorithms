@@ -17,7 +17,8 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	
 
 {
-
+	//Create a grid of nodes
+	this->m_grid.createGrid(sf::Vector2f(100.0f, 100.0f), 10, 10);
 
 }
 
@@ -28,7 +29,7 @@ Application::~Application()
 
 void Application::Update(sf::Time pDeltaTime)
 {
-	
+	this->m_mousePointer.Update(this->m_window);
 }
 
 void Application::Render()
@@ -36,8 +37,13 @@ void Application::Render()
 
 	m_window.clear();
 
+	// Render all nodes
+	for (auto& tNode : m_grid.m_vecNodes)
+	{
+		this->m_window.draw(tNode.m_rectShape);
+	}
 
-
+	this->m_window.draw(this->m_mousePointer.m_rectShape);
 
 	m_window.display();
 }
@@ -62,10 +68,8 @@ void Application::Run()
 				m_window.close();
 
 
-
-
 			//Switch on event function
-				HandleEvent(event);
+			HandleEvent(event);
 
 		}
 
@@ -119,15 +123,32 @@ void Application::HandleInput(sf::Mouse::Button pButton, bool pPressed)
 		case sf::Mouse::Left:
 		{
 
+			for (auto& tNode : m_grid.m_vecNodes)
+			{
+				if (tNode.m_rectShape.getGlobalBounds().intersects(this->m_mousePointer.getBoundingBox()))
+				{
+					//Set the clicked node as the new StartNode
+					m_grid.SetNewStartNode(tNode);
+				}
+
+			}
 
 			break;
 		}
 		case sf::Mouse::Right:
 		{
-			
+			for (auto& tNode : m_grid.m_vecNodes)
+			{
+				if (tNode.m_rectShape.getGlobalBounds().intersects(this->m_mousePointer.getBoundingBox()))
+				{
+					//Set the clicked node as the new EndNode
+					m_grid.SetNewEndNode(tNode);
+				}
+
+			}
 			break;
 		}
 		}
 	}
-	
+
 }

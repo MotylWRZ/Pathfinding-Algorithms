@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
+#include "Grid.h"
+#include "MousePointer.h"
 
 class Application
 {
@@ -24,8 +26,9 @@ private:
 
 	sf::Time  m_desiredUpdateTime;
 
-private:
 
+	MousePointer m_mousePointer;
+	Grid m_grid;
 	
 };
 
