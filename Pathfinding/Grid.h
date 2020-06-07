@@ -21,7 +21,8 @@ public:
 
 
 	//Class members
-
+	int m_GridWidth;
+	int m_GridHeight;
 	
 	sf::Vector2f m_gridPosition;
 

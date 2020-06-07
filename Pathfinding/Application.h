@@ -3,6 +3,7 @@
 
 #include "Grid.h"
 #include "MousePointer.h"
+#include "Pathfinder.h"
 
 class Application
 {
@@ -29,6 +30,9 @@ private:
 
 	MousePointer m_mousePointer;
 	Grid m_grid;
+
+	//Create a pathfinder
+	Pathfinder tPathFinder;
 	
 };
 

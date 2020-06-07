@@ -125,12 +125,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MousePointer.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Pathfinder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="MousePointer.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="Pathfinder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

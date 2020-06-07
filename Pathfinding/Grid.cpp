@@ -16,6 +16,9 @@ Grid::~Grid()
 
 void Grid::createGrid(sf::Vector2f pGridPosition, int pWidth, int pHeight)
 {
+	this->m_GridWidth = pWidth;
+	this->m_GridHeight = pHeight;
+
 	//Set grid world position
 	m_gridPosition = pGridPosition;
 

@@ -2,8 +2,8 @@
 
 
 
-Node::Node(bool pWalkable, sf::Vector2f pPosition)
-	: m_bWalkable(pWalkable)
+Node::Node(bool pObstacle, sf::Vector2f pPosition)
+	: m_bObstacle(pObstacle)
 	, m_position(pPosition)
 	, m_parentNode(nullptr)
 	, m_bVisited(false)

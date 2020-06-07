@@ -24,6 +24,9 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	this->m_grid.createGrid(sf::Vector2f(100.0f, 100.0f), 10, 10);
 
 	
+	
+
+	
 }
 
 
@@ -147,12 +150,15 @@ void Application::HandleInput(sf::Mouse::Button pButton, bool pPressed)
 				{
 					//Set the clicked node as the new EndNode
 					m_grid.SetNewEndNode(tNode);
+					
 				}
 
 			}
 			break;
 		}
 		}
+		this->tPathFinder.SolveAStar(this->m_grid);
+		
 	}
 
 }
