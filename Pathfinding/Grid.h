@@ -14,12 +14,10 @@ public:
 
 	void createGrid(sf::Vector2f pGridPosition,int  pWidth, int pHeight);
 	
-	
-
-
 	//Accesors/Mutators
 	void SetNewStartNode(Node& pNode);
 	void SetNewEndNode(Node& pNode);
+	
 
 
 	//Class members

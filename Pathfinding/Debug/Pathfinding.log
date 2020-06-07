@@ -1,2 +1,7 @@
-﻿  Application.cpp
-  Pathfinding.vcxproj -> C:\Users\Motyl\Desktop\SFMLBaseProjectTest\PathFindingSourceV4\Debug\Pathfinding.exe
+﻿  MousePointer.cpp
+c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev5_wip\pathfinding\mousepointer.cpp(7): warning C4305: 'argument': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+  Pathfinding.vcxproj -> C:\Users\Motyl\Desktop\SFMLBaseProjectTest\PathFindingSourceV5_WIP\Debug\Pathfinding.exe

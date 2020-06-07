@@ -17,9 +17,13 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	
 
 {
+	//Initialise Mouse Pointer
+	this->m_mousePointer.Initialise(this->m_window);
+
 	//Create a grid of nodes
 	this->m_grid.createGrid(sf::Vector2f(100.0f, 100.0f), 10, 10);
 
+	
 }
 
 
@@ -29,7 +33,7 @@ Application::~Application()
 
 void Application::Update(sf::Time pDeltaTime)
 {
-	this->m_mousePointer.Update(this->m_window);
+	this->m_mousePointer.Update();
 }
 
 void Application::Render()

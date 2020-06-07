@@ -9,8 +9,16 @@ public:
 	MousePointer();
 	virtual ~MousePointer();
 
-	void Update(sf::RenderWindow& pWindow);
+	void Initialise(sf::RenderWindow& pWindow);
+	void Update();
 	
+	//Accesors/Mutators
+
+	void SetCurrentWindow(sf::RenderWindow& pWindow);
+
+
+	//Pointer to curent window
+	sf::RenderWindow* m_currentWindowPtr;
 
 	inline sf::Vector2f getPosition() { return m_position; };
 	inline sf::FloatRect getBoundingBox() { return m_rectShape.getGlobalBounds(); };
