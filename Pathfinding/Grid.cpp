@@ -94,3 +94,41 @@ void Grid::SetNewEndNode(Node& pNode)
 	this->m_endNode = &pNode;
 	pNode.m_rectShape.setFillColor(sf::Color::Red);
 }
+
+void Grid::SetNodeAsUnvisited(Node& pNode)
+{
+	//Check if the node is a start/end node
+	if (&pNode != this->m_startNode && &pNode != this->m_endNode )
+	{
+		pNode.m_bVisited = false;
+		pNode.m_rectShape.setFillColor(sf::Color::White);
+	}
+}
+
+void Grid::SetNodeAsVisited(Node& pNode)
+{
+	//Check if the node is a start/end node
+	if (&pNode != this->m_startNode && &pNode != this->m_endNode)
+	{
+		pNode.m_bVisited = true;
+		pNode.m_rectShape.setFillColor(sf::Color::Yellow);
+	}
+}
+
+void Grid::SetNodeAsObstacle(Node& pNode)
+{
+	if (&pNode != this->m_startNode && &pNode != this->m_endNode)
+	{
+		pNode.m_bObstacle = true;
+		pNode.m_rectShape.setFillColor(sf::Color::Magenta);
+	}
+}
+
+void Grid::SetNodeAsNonObstacle(Node& pNode)
+{
+	if (&pNode != this->m_startNode && &pNode != this->m_endNode)
+	{
+		pNode.m_bObstacle = false;
+		pNode.m_rectShape.setFillColor(sf::Color::White);
+	}
+}

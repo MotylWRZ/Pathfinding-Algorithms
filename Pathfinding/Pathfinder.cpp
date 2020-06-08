@@ -20,7 +20,13 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 	for(int x = 0; x < pGrid.m_GridWidth; x++)
 		for (int y = 0; y < pGrid.m_GridHeight; y++)
 		{
+			
 			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_bVisited = false;
+			if (pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_bObstacle == false)
+			{
+				pGrid.SetNodeAsUnvisited(pGrid.m_vecNodes[y*pGrid.m_GridWidth + x]); // Experimental
+			}
+			
 			//check it later
 			/*pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_gCost = INFINITY;
 			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_hCost = INFINITY;*/
@@ -67,8 +73,7 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 		tCurrentNode = tListNotVisitedNodes.front();
 		// After the current node have been explored we change the bVisited flag to true
 		tCurrentNode->m_bVisited = true; 
-		if(tCurrentNode != pGrid.m_startNode && tCurrentNode != pGrid.m_endNode)
-		tCurrentNode->m_rectShape.setFillColor(sf::Color::Yellow);
+		pGrid.SetNodeAsVisited(*tCurrentNode);
 
 		//Check all negighbours of this node
 		for (auto tNodeNeighbour : tCurrentNode->m_vecNeighbours)

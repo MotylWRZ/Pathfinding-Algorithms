@@ -17,7 +17,10 @@ public:
 	//Accesors/Mutators
 	void SetNewStartNode(Node& pNode);
 	void SetNewEndNode(Node& pNode);
-	
+	void SetNodeAsUnvisited(Node& pNode);
+	void SetNodeAsVisited(Node& pNode);
+	void SetNodeAsObstacle(Node& pNode);
+	void SetNodeAsNonObstacle(Node& pNode);
 
 
 	//Class members

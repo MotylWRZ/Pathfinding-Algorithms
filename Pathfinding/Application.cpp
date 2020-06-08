@@ -156,6 +156,28 @@ void Application::HandleInput(sf::Mouse::Button pButton, bool pPressed)
 			}
 			break;
 		}
+
+		case sf::Mouse::Middle:
+		{
+			for (auto& tNode : m_grid.m_vecNodes)
+			{
+				if (tNode.m_rectShape.getGlobalBounds().intersects(this->m_mousePointer.getBoundingBox()))
+				{
+					if (!tNode.m_bObstacle)
+					{
+						m_grid.SetNodeAsObstacle(tNode);
+					}
+					else
+					{
+						m_grid.SetNodeAsNonObstacle(tNode);
+					}
+					
+
+				}
+
+			}
+			break;
+		}
 		}
 		this->tPathFinder.SolveAStar(this->m_grid);
 		
