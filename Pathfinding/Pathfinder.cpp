@@ -96,7 +96,7 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 		}
 		
 	}
-	
+	// Draw the final path
 	DrawPath(pGrid);
 }
 

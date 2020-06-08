@@ -14,7 +14,7 @@ Grid::~Grid()
 }
 
 
-void Grid::createGrid(sf::Vector2f pGridPosition, int pWidth, int pHeight)
+void Grid::createGrid(sf::Vector2f pGridPosition, int pWidth, int pHeight, sf::Vector2f pTileSize, float pTileSpace)
 {
 	this->m_GridWidth = pWidth;
 	this->m_GridHeight = pHeight;
@@ -28,16 +28,17 @@ void Grid::createGrid(sf::Vector2f pGridPosition, int pWidth, int pHeight)
 	//Create a grid of nodes
 	for (int i = 0; i < pWidth; i++)
 	{
-		Node tNode = Node(false, tPos);
+		Node tNode = Node(false, tPos, pTileSize);
 		this->m_vecNodes.push_back(tNode);
 		for (int j = 1; j < pHeight; j++)
 		{
-			tPos.y += 60.0f;
-			Node tNode = Node(false, tPos);
+
+			tPos.y += tNode.m_rectShape.getSize().y + pTileSpace;
+			Node tNode = Node(false, tPos, pTileSize);
 			this->m_vecNodes.push_back(tNode);
 			
 		}
-		tPos.x += 60.0f;
+		tPos.x += tNode.m_rectShape.getSize().x + pTileSpace;
 		tPos.y = this->m_gridPosition.y;
 	}
 

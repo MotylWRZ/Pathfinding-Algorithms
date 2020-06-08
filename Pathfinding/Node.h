@@ -3,7 +3,7 @@
 class Node
 {
 public:
-	Node(bool pObstacle, sf::Vector2f pPosition);
+	Node(bool pObstacle, sf::Vector2f pPosition, sf::Vector2f pTileSize);
 	virtual ~Node();
 
 	inline int GetFCost() { return m_gCost + m_hCost; };

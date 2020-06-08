@@ -12,7 +12,7 @@ public:
 	Grid();
 	virtual ~Grid();
 
-	void createGrid(sf::Vector2f pGridPosition,int  pWidth, int pHeight);
+	void createGrid(sf::Vector2f pGridPosition,int  pWidth, int pHeight, sf::Vector2f pTileSize, float pTileSpace);
 	
 	//Accesors/Mutators
 	void SetNewStartNode(Node& pNode);

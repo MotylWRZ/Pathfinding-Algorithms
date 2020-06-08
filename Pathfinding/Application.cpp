@@ -21,7 +21,7 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	this->m_mousePointer.Initialise(this->m_window);
 
 	//Create a grid of nodes
-	this->m_grid.createGrid(sf::Vector2f(100.0f, 100.0f), 10, 10);
+	this->m_grid.createGrid(sf::Vector2f(100.0f, 100.0f), 20, 20, sf::Vector2f(20.0f, 20.0f), 1.0f);
 
 	
 	
