@@ -7,6 +7,7 @@ public:
 	virtual ~Pathfinder();
 
 	void SolveAStar(Grid& pGrid);
+	void DrawPath(Grid& pGrid);
 
 };
 

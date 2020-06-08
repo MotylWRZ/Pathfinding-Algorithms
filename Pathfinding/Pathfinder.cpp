@@ -22,7 +22,7 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 		{
 			
 			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_bVisited = false;
-			if (pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_bObstacle == false)
+			if (!pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_bObstacle)
 			{
 				pGrid.SetNodeAsUnvisited(pGrid.m_vecNodes[y*pGrid.m_GridWidth + x]); // Experimental
 			}
@@ -97,4 +97,20 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 		
 	}
 	
+	DrawPath(pGrid);
+}
+
+
+void Pathfinder::DrawPath(Grid& pGrid)
+{
+	if (pGrid.m_endNode != nullptr)
+	{
+		Node* tPath = pGrid.m_endNode;
+		
+		while (tPath->m_parentNode != nullptr && tPath->m_parentNode != pGrid.m_startNode)
+		{
+			tPath->m_parentNode->m_rectShape.setFillColor(sf::Color::Blue);
+			tPath = tPath->m_parentNode;
+		}
+	}
 }
