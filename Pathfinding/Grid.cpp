@@ -63,7 +63,30 @@ void Grid::createGrid(sf::Vector2f pGridPosition, int pWidth, int pHeight, sf::V
 			{
 				m_vecNodes[y * pWidth + x].m_vecNeighbours.push_back(&m_vecNodes[(y + 0) * pWidth + (x + 1)]);
 			}
+
+
+
+			// Create Diagonal connections between nodes
+			if (y > 0 && x > 0)
+			{
+				m_vecNodes[y*pWidth + x].m_vecNeighbours.push_back(&m_vecNodes[(y - 1) * pWidth + (x - 1)]);
+			}
+			if (y < pHeight - 1 && x > 0)
+			{
+				m_vecNodes[y*pWidth + x].m_vecNeighbours.push_back(&m_vecNodes[(y + 1) * pWidth + (x - 1)]);
+			}
+			if (y > 0 && x < pWidth - 1)
+			{
+				m_vecNodes[y*pWidth + x].m_vecNeighbours.push_back(&m_vecNodes[(y - 1) * pWidth + (x + 1)]);
+			}
+			if (y < pWidth - 1 && x < pWidth - 1)
+			{
+				m_vecNodes[y*pWidth + x].m_vecNeighbours.push_back(&m_vecNodes[(y + 1) * pWidth + (x + 1)]);
+			}
 		}
+
+	
+	
 
 	//Manually position the starting and ending nodes so they are no longer nullptr
 	m_startNode = &m_vecNodes[(pHeight / 2) * pWidth + 1];
