@@ -1,2 +1,6 @@
 ﻿  Grid.cpp
-  Pathfinding.vcxproj -> C:\Users\Motyl\Desktop\SFMLBaseProjectTest\PathFindingSourceV13_WIP\Debug\Pathfinding.exe
+c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev14 — kopia\pathfinding\node.h(11): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  Pathfinder.cpp
+c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev14 — kopia\pathfinding\node.h(11): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+  Pathfinding.vcxproj -> C:\Users\Motyl\Desktop\SFMLBaseProjectTest\PathFindingSourceV14 — kopia\Debug\Pathfinding.exe

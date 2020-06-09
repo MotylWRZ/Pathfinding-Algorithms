@@ -127,6 +127,10 @@ void Grid::SetNodeAsUnvisited(Node& pNode)
 		pNode.m_bVisited = false;
 		pNode.m_rectShape.setFillColor(sf::Color::White);
 	}
+	else
+	{
+		pNode.m_bVisited = false;
+	}
 }
 
 void Grid::SetNodeAsVisited(Node& pNode)
@@ -136,6 +140,10 @@ void Grid::SetNodeAsVisited(Node& pNode)
 	{
 		pNode.m_bVisited = true;
 		pNode.m_rectShape.setFillColor(sf::Color::Yellow);
+	}
+	else
+	{
+		pNode.m_bVisited = true;
 	}
 }
 

@@ -6,21 +6,22 @@ public:
 	Node(bool pObstacle, sf::Vector2f pPosition, sf::Vector2f pTileSize);
 	virtual ~Node();
 
+
+	//Accesors/Mutators
 	inline int GetFCost() { return m_gCost + m_hCost; };
+	
+
 
 public:
 	bool m_bObstacle;
 	bool m_bVisited;
 	
-	int m_gCost;
-	int m_hCost;
+	float m_gCost; // Distance from starting point	
+	float m_hCost; // Distance from endNode
 
-	float m_localGoal;
-	float m_globalGoal;
+	Node* m_parentNode; // Pointer to parent node (previous node)
 
-	Node* m_parentNode;
-
-	std::vector<Node*> m_vecNeighbours;
+	std::vector<Node*> m_vecNeighbours; // vector storing pointers to all neighbours
 
 	sf::Vector2f m_position;
 	sf::RectangleShape m_rectShape;

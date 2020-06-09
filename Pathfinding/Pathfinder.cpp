@@ -21,18 +21,13 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 		for (int y = 0; y < pGrid.m_GridHeight; y++)
 		{
 			
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_bVisited = false;
+			//If node is NOT an obstacle, set it an Unvisisted
 			if (!pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_bObstacle)
 			{
 				pGrid.SetNodeAsUnvisited(pGrid.m_vecNodes[y*pGrid.m_GridWidth + x]); // Experimental
 			}
-			
-			//check it later
-			/*pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_gCost = INFINITY;
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_hCost = INFINITY;*/
-			
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_localGoal = INFINITY;
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_globalGoal = INFINITY;
+			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_gCost = INFINITY;
+			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_hCost = INFINITY;
 			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_parentNode = nullptr;
 		}
 
@@ -51,8 +46,8 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 	//Setup Starting conditions
 	//Create a pointer to current node that is explored
 	Node* tCurrentNode = pGrid.m_startNode;
-	pGrid.m_startNode->m_localGoal = 0.0f;
-	pGrid.m_startNode->m_globalGoal = heuristic(pGrid.m_startNode, pGrid.m_endNode);
+	pGrid.m_startNode->m_gCost = 0.0f;
+	pGrid.m_startNode->m_hCost = heuristic(pGrid.m_startNode, pGrid.m_endNode);
 	
 	//Add a list for notVisited nodes and add to it a startNode
 	std::list<Node*> tListNotVisitedNodes;
@@ -62,7 +57,7 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 	{
 		
 		//Sort Unvisited nodes by global goal, so node with lowest cost first
-		tListNotVisitedNodes.sort([](const Node* lhs, const Node* rhs) {return lhs->m_globalGoal < rhs->m_globalGoal; });
+		tListNotVisitedNodes.sort([](const Node* lhs, const Node* rhs) {return lhs->m_hCost < rhs->m_hCost; });
 
 		while (!tListNotVisitedNodes.empty() && tListNotVisitedNodes.front()->m_bVisited)
 			tListNotVisitedNodes.pop_front();
@@ -84,14 +79,14 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 				tListNotVisitedNodes.push_back(tNodeNeighbour);
 
 			// Calculate the neighbours lowest parent distance
-			float tLowerGoal = tCurrentNode->m_localGoal + distance(tCurrentNode, tNodeNeighbour);
+			float tLowerGoal = tCurrentNode->m_gCost + distance(tCurrentNode, tNodeNeighbour);
 
-			if (tLowerGoal < tNodeNeighbour->m_localGoal)
+			if (tLowerGoal < tNodeNeighbour->m_gCost)
 			{
 				tNodeNeighbour->m_parentNode = tCurrentNode;
-				tNodeNeighbour->m_localGoal = tLowerGoal;
+				tNodeNeighbour->m_gCost = tLowerGoal;
 
-				tNodeNeighbour->m_globalGoal = tNodeNeighbour->m_localGoal + heuristic(tNodeNeighbour, pGrid.m_endNode);
+				tNodeNeighbour->m_hCost = tNodeNeighbour->m_gCost + heuristic(tNodeNeighbour, pGrid.m_endNode);
 			}
 		}
 		
