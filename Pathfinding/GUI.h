@@ -11,7 +11,7 @@ public:
 	virtual ~GUI();
 
 	void Render(sf::RenderWindow& pWindow);
-	void AddButton(sf::Vector2f pSize, std::string pText, int pID);
+	void AddButton(sf::Vector2f pSize, std::string pText, int pID, int pTextSize = 10, sf::Vector2f pTextOffset = sf::Vector2f(0.0f, 0.0f));
 
 private:
 	void UpdatePanel();

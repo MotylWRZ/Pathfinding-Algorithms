@@ -25,14 +25,14 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 
 	//Create GUI
 	this->m_GUI = new GUI(sf::Vector2f(700.0f, 100.0f));
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Start", 1, 20, sf::Vector2f(-30.0f, -10.0f));
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Set End", 1, 20, sf::Vector2f(-30.0f, -10.0f));
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Obstacle", 1, 20, sf::Vector2f(-40.0f, -10.0f));
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve A*", 1, 20, sf::Vector2f(-30.0f, -10.0f));
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve Dijkstra", 1, 20, sf::Vector2f(-50.0f, -10.0f));
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1, 20);
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1, 20);
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1, 20);
 
 	
 }

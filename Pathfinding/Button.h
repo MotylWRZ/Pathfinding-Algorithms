@@ -1,10 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+
 #include <string>
 class Button
 {
 public:
-	Button(sf::Vector2f pSize, sf::Vector2f pPosition, std::string pText, int pID);
+	Button(sf::Vector2f pSize, sf::Vector2f pPosition, std::string pText, int pID, int pTextSizes, sf::Vector2f pTextOffset);
 	virtual ~Button();
 
 	void Render(sf::RenderWindow& pWindow);
@@ -16,13 +17,16 @@ public:
 	inline int GetID() { return m_ID; };
 
 	inline void SetButtonID(int ID) { m_ID = ID; }; //it can be also an enum value
-	inline void SetPosition(sf::Vector2f pPosition) { m_rectShape.setPosition(pPosition); };
+	void SetPosition(sf::Vector2f pPosition);
 
 
 private:
 	sf::RectangleShape m_rectShape;
 	sf::Text m_buttonText;
+	sf::Vector2f m_textOffset;
+	int m_textSize;
 	int m_ID;
+	sf::Font m_font;
 
 
 };

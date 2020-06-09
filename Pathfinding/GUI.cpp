@@ -34,10 +34,10 @@ GUI::~GUI()
 
 
 
-void GUI::AddButton(sf::Vector2f pSize, std::string pText, int pID)
+void GUI::AddButton(sf::Vector2f pSize, std::string pText, int pID, int pTextSize, sf::Vector2f pTextOffset)
 {
 	//Create a button
-	Button* tButton = new Button(pSize, sf::Vector2f(50.0f, 100.0f), pText, pID);
+	Button* tButton = new Button(pSize, sf::Vector2f(50.0f, 100.0f), pText, pID, pTextSize, pTextOffset);
 	this->m_vecButtons.push_back(tButton);
 
 	// Update the panel and position all buttons
