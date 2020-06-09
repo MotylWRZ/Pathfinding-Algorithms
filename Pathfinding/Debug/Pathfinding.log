@@ -1,6 +1,4 @@
 ﻿  Application.cpp
-c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev15_wip\pathfinding\node.h(11): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev15_wip\pathfinding\application.h(7): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  GUI.cpp
-  Generating Code...
-  Pathfinding.vcxproj -> C:\Users\Motyl\Desktop\SFMLBaseProjectTest\PathFindingSourceV15_WIP\Debug\Pathfinding.exe
+c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev16_wip\pathfinding\node.h(11): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev16_wip\pathfinding\application.h(7): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Pathfinding.vcxproj -> C:\Users\Motyl\Desktop\SFMLBaseProjectTest\PathFindingSourceV16_WIP\Debug\Pathfinding.exe

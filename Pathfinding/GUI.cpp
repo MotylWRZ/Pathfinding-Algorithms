@@ -23,6 +23,13 @@ GUI::GUI(sf::Vector2f pPosition)
 
 GUI::~GUI()
 {
+	// Clear the memory from button instances
+	for (int i = 0; i < m_vecButtons.size(); i++)
+	{
+		Button* tPtr = m_vecButtons[i];
+		m_vecButtons.erase(m_vecButtons.begin() + i);
+		delete tPtr;
+	}
 }
 
 

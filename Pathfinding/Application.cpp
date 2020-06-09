@@ -33,6 +33,7 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
 	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
 	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
+
 	
 }
 
