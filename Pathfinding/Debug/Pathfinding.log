@@ -1,6 +1,6 @@
-﻿  Grid.cpp
-c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev14 — kopia\pathfinding\node.h(11): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-  Pathfinder.cpp
-c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev14 — kopia\pathfinding\node.h(11): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+﻿  Application.cpp
+c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev15_wip\pathfinding\node.h(11): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev15_wip\pathfinding\application.h(7): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  GUI.cpp
   Generating Code...
-  Pathfinding.vcxproj -> C:\Users\Motyl\Desktop\SFMLBaseProjectTest\PathFindingSourceV14 — kopia\Debug\Pathfinding.exe
+  Pathfinding.vcxproj -> C:\Users\Motyl\Desktop\SFMLBaseProjectTest\PathFindingSourceV15_WIP\Debug\Pathfinding.exe

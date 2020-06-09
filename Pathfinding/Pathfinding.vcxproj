@@ -121,7 +121,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="GUI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MousePointer.cpp" />
     <ClCompile Include="Node.cpp" />
@@ -129,7 +131,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="GUI.h" />
     <ClInclude Include="MousePointer.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Pathfinder.h" />

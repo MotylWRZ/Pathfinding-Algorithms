@@ -23,15 +23,23 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	//Create a grid of nodes
 	this->m_grid.createGrid(sf::Vector2f(100.0f, 100.0f), 20, 20, sf::Vector2f(20.0f, 20.0f), 1.0f);
 
-	
-	
-
+	//Create GUI
+	this->m_GUI = new GUI(sf::Vector2f(700.0f, 100.0f));
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
+	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1);
 	
 }
 
 
 Application::~Application()
 {
+	delete this->m_GUI;
 }
 
 void Application::Update(sf::Time pDeltaTime)
@@ -51,6 +59,8 @@ void Application::Render()
 	}
 
 	this->m_window.draw(this->m_mousePointer.m_rectShape);
+
+	this->m_GUI->Render(this->m_window);
 
 	m_window.display();
 }
