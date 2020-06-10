@@ -198,6 +198,7 @@ void Application::HandleInput(sf::Mouse::Button pButton, bool pPressed)
 			break;
 		}
 		case E_PATHDINDER_METHOD::E_DIJKSTRA:
+			this->tPathFinder.SolveDijkstra(this->m_grid);
 			break;
 		}
 		
