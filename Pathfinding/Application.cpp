@@ -16,6 +16,7 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	, m_screenHeight(pWindowHeight)
 	, m_desiredUpdateTime(sf::seconds(1.0f / 60.0f))
 	, m_eCurrentMethod(E_PATHDINDER_METHOD::E_NONE)
+	, m_leftMouseBtnPressed(false)
 	
 
 {
@@ -30,6 +31,7 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Start", E_ACTIVE_NODE::E_NODE_START, 20, sf::Color::Green, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
 	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set End", E_ACTIVE_NODE::E_NODE_END, 20, sf::Color::Red, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
 	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Obstacle", E_ACTIVE_NODE::E_NODE_OBSTACLE, 20, sf::Color::Magenta, sf::Color::White, sf::Vector2f(-40.0f, -10.0f));
+	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Remove Obstacle", E_ACTIVE_NODE::E_NODE_NO_OBSTACLE, 15, sf::Color::White, sf::Color::Black, sf::Vector2f(-40.0f, -10.0f));
 
 	this->m_algorithmsPanel = new GUI(sf::Vector2f(900.0f, 110.0f), sf::Vector2f(170.0f, 270.0f));
 	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve A*", E_PATHDINDER_METHOD::E_ASTAR, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
@@ -49,6 +51,12 @@ Application::~Application()
 void Application::Update(sf::Time pDeltaTime)
 {
 	this->m_mousePointer.Update();
+
+	// Check whether the left button is still pressed. If it is, perform the node drawing
+	if (this->m_leftMouseBtnPressed)
+	{
+		this->m_grid.DrawNodes(this->m_eCurrentNode, this->m_mousePointer);
+	}
 }
 
 void Application::Render()
@@ -154,13 +162,21 @@ void Application::HandleEvent(const sf::Event& pEvent)
 
 void Application::HandleInput(sf::Mouse::Button pButton, bool pPressed)
 {
-	if (pPressed)
-	{
+	/*if (pPressed)
+	{*/
 		switch (pButton)
 		{
 		case sf::Mouse::Left:
 		{
-			this->m_grid.DrawNodes(this->m_eCurrentNode, this->m_mousePointer);
+			if (pPressed)
+			{
+				this->m_leftMouseBtnPressed = true;
+			}
+			else
+			{
+				this->m_leftMouseBtnPressed = false;
+			}
+		
 
 			break;
 		}
@@ -181,8 +197,10 @@ void Application::HandleInput(sf::Mouse::Button pButton, bool pPressed)
 			this->tPathFinder.SolveAStar(this->m_grid);
 			break;
 		}
+		case E_PATHDINDER_METHOD::E_DIJKSTRA:
+			break;
 		}
 		
-	}
+	/*}*/
 
 }

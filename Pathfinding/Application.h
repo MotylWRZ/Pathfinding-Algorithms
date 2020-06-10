@@ -42,6 +42,8 @@ private:
 
 	E_PATHDINDER_METHOD m_eCurrentMethod;
 	E_ACTIVE_NODE m_eCurrentNode;
+
+	bool m_leftMouseBtnPressed;
 	
 };
 

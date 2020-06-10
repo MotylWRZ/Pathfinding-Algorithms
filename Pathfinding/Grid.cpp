@@ -176,7 +176,7 @@ void Grid::DrawNodes(E_ACTIVE_NODE pActiveNodeType, MousePointer& pMousePointer)
 	{
 		for (auto& tNode : this->m_vecNodes)
 		{
-			if (tNode.m_rectShape.getGlobalBounds().intersects(pMousePointer.getBoundingBox()))
+			if (tNode.m_rectShape.getGlobalBounds().intersects(pMousePointer.getBoundingBox()) && &tNode != m_endNode && !tNode.m_bObstacle)
 			{
 				//Set the clicked node as the new StartNode
 				SetNewStartNode(tNode);
@@ -188,7 +188,7 @@ void Grid::DrawNodes(E_ACTIVE_NODE pActiveNodeType, MousePointer& pMousePointer)
 	{
 		for (auto& tNode : this->m_vecNodes)
 		{
-			if (tNode.m_rectShape.getGlobalBounds().intersects(pMousePointer.getBoundingBox()))
+			if (tNode.m_rectShape.getGlobalBounds().intersects(pMousePointer.getBoundingBox()) && &tNode != m_startNode && !tNode.m_bObstacle)
 			{
 				//Set the clicked node as the new EndNode
 				SetNewEndNode(tNode);
@@ -207,13 +207,20 @@ void Grid::DrawNodes(E_ACTIVE_NODE pActiveNodeType, MousePointer& pMousePointer)
 				{
 					SetNodeAsObstacle(tNode);
 				}
-				else
-				{
-					SetNodeAsNonObstacle(tNode);
-				}
 			}
 		}
 		break;
 	}
+	case E_ACTIVE_NODE::E_NODE_NO_OBSTACLE:
+		for (auto& tNode : this->m_vecNodes)
+		{
+		if(tNode.m_rectShape.getGlobalBounds().intersects(pMousePointer.getBoundingBox()))
+		{
+			if (tNode.m_bObstacle)
+			{
+				SetNodeAsNonObstacle(tNode);
+			}
+		}
+		}
 	}
 }
