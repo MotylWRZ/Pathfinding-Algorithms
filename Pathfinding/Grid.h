@@ -4,6 +4,9 @@
 #include <list>
 
 #include "Node.h"
+#include "AppStructures.h"
+#include "MousePointer.h"
+
 
 
 class Grid
@@ -13,7 +16,7 @@ public:
 	virtual ~Grid();
 
 	void createGrid(sf::Vector2f pGridPosition,int  pWidth, int pHeight, sf::Vector2f pTileSize, float pTileSpace);
-	
+	void DrawNodes(E_ACTIVE_NODE pActiveNodeType, MousePointer& pMousePointer);
 	//Accesors/Mutators
 	void SetNewStartNode(Node& pNode);
 	void SetNewEndNode(Node& pNode);

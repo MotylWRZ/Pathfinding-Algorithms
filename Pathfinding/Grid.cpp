@@ -164,3 +164,56 @@ void Grid::SetNodeAsNonObstacle(Node& pNode)
 		pNode.m_rectShape.setFillColor(sf::Color::White);
 	}
 }
+
+void Grid::DrawNodes(E_ACTIVE_NODE pActiveNodeType, MousePointer& pMousePointer)
+{
+	switch (pActiveNodeType)
+	{
+	case E_ACTIVE_NODE::E_NODE_NONE:
+		break;
+
+	case E_ACTIVE_NODE::E_NODE_START:
+	{
+		for (auto& tNode : this->m_vecNodes)
+		{
+			if (tNode.m_rectShape.getGlobalBounds().intersects(pMousePointer.getBoundingBox()))
+			{
+				//Set the clicked node as the new StartNode
+				SetNewStartNode(tNode);
+			}
+		}
+		break;
+	}
+	case E_ACTIVE_NODE::E_NODE_END:
+	{
+		for (auto& tNode : this->m_vecNodes)
+		{
+			if (tNode.m_rectShape.getGlobalBounds().intersects(pMousePointer.getBoundingBox()))
+			{
+				//Set the clicked node as the new EndNode
+				SetNewEndNode(tNode);
+			}
+		}
+		break;
+	}
+	case E_ACTIVE_NODE::E_NODE_OBSTACLE:
+	{
+
+		for (auto& tNode : this->m_vecNodes)
+		{
+			if (tNode.m_rectShape.getGlobalBounds().intersects(pMousePointer.getBoundingBox()))
+			{
+				if (!tNode.m_bObstacle)
+				{
+					SetNodeAsObstacle(tNode);
+				}
+				else
+				{
+					SetNodeAsNonObstacle(tNode);
+				}
+			}
+		}
+		break;
+	}
+	}
+}

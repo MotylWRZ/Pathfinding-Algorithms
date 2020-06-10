@@ -8,6 +8,7 @@
 #include "AppStructures.h"
 
 
+
 class Application
 {
 public:
@@ -40,6 +41,7 @@ private:
 	GUI* m_algorithmsPanel;
 
 	E_PATHDINDER_METHOD m_eCurrentMethod;
+	E_ACTIVE_NODE m_eCurrentNode;
 	
 };
 

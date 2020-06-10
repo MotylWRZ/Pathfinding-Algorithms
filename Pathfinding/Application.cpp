@@ -27,9 +27,9 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 
 	//Create GUI
 	this->m_nodesPanel = new GUI(sf::Vector2f(700.0f, 110.0f), sf::Vector2f(170.0f, 270.0f));
-	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Start", 1, 20, sf::Color::Green, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
-	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set End", 1, 20, sf::Color::Red, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
-	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Obstacle", 1, 20, sf::Color::Magenta, sf::Color::White, sf::Vector2f(-40.0f, -10.0f));
+	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Start", E_ACTIVE_NODE::E_NODE_START, 20, sf::Color::Green, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
+	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set End", E_ACTIVE_NODE::E_NODE_END, 20, sf::Color::Red, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
+	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Obstacle", E_ACTIVE_NODE::E_NODE_OBSTACLE, 20, sf::Color::Magenta, sf::Color::White, sf::Vector2f(-40.0f, -10.0f));
 
 	this->m_algorithmsPanel = new GUI(sf::Vector2f(900.0f, 110.0f), sf::Vector2f(170.0f, 270.0f));
 	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve A*", E_PATHDINDER_METHOD::E_ASTAR, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
@@ -125,12 +125,23 @@ void Application::HandleEvent(const sf::Event& pEvent)
 	{
 	case sf::Event::MouseButtonPressed:
 	{
-		this->HandleInput(tEvent.mouseButton.button, true);
+	
 		// Handle GUI Events
 		this->m_nodesPanel->HandleInput(tEvent.mouseButton.button, true, this->m_mousePointer);
+		//get current active Node and assign the value to ECurrentNode enum (if active button is NOT a nullptr)
+		if (this->m_nodesPanel->GetActiveButton())
+		{
+			this->m_eCurrentNode = static_cast<E_ACTIVE_NODE>(this->m_nodesPanel->GetActiveButton()->GetID());
+		}
 		this->m_algorithmsPanel->HandleInput(tEvent.mouseButton.button, true, this->m_mousePointer);
-		//Get current active Pathfinding method and assign the value to ECurrentMethod enum
-		this->m_eCurrentMethod = static_cast<E_PATHDINDER_METHOD>(this->m_algorithmsPanel->GetActiveButton()->GetID());
+		//Get current active Pathfinding method and assign the value to ECurrentMethod enum (if active button is NOT a nullptr)
+		if (this->m_algorithmsPanel->GetActiveButton())
+		{
+			this->m_eCurrentMethod = static_cast<E_PATHDINDER_METHOD>(this->m_algorithmsPanel->GetActiveButton()->GetID());
+		}
+		
+		this->HandleInput(tEvent.mouseButton.button, true);
+
 		break;
 	}
 	case sf::Event::MouseButtonReleased:
@@ -149,59 +160,20 @@ void Application::HandleInput(sf::Mouse::Button pButton, bool pPressed)
 		{
 		case sf::Mouse::Left:
 		{
-			
-
-			for (auto& tNode : m_grid.m_vecNodes)
-			{
-				if (tNode.m_rectShape.getGlobalBounds().intersects(this->m_mousePointer.getBoundingBox()))
-				{
-					//Set the clicked node as the new StartNode
-					m_grid.SetNewStartNode(tNode);
-				}
-
-			}
+			this->m_grid.DrawNodes(this->m_eCurrentNode, this->m_mousePointer);
 
 			break;
 		}
 		case sf::Mouse::Right:
 		{
-			for (auto& tNode : m_grid.m_vecNodes)
-			{
-				if (tNode.m_rectShape.getGlobalBounds().intersects(this->m_mousePointer.getBoundingBox()))
-				{
-					//Set the clicked node as the new EndNode
-					m_grid.SetNewEndNode(tNode);
-					
-				}
-
-			}
 			break;
 		}
-
 		case sf::Mouse::Middle:
 		{
-			for (auto& tNode : m_grid.m_vecNodes)
-			{
-				if (tNode.m_rectShape.getGlobalBounds().intersects(this->m_mousePointer.getBoundingBox()))
-				{
-					if (!tNode.m_bObstacle)
-					{
-						m_grid.SetNodeAsObstacle(tNode);
-					}
-					else
-					{
-						m_grid.SetNodeAsNonObstacle(tNode);
-					}
-					
-
-				}
-
-			}
 			break;
 		}
 		}
-
-		// Check whicch method is active and run active method (if any)
+		// Check which method is active and run active method (if any)
 		switch (this->m_eCurrentMethod)
 		{
 		case E_PATHDINDER_METHOD::E_ASTAR:
@@ -210,7 +182,6 @@ void Application::HandleInput(sf::Mouse::Button pButton, bool pPressed)
 			break;
 		}
 		}
-		
 		
 	}
 
