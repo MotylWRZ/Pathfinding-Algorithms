@@ -36,7 +36,7 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	this->m_algorithmsPanel = new GUI(sf::Vector2f(900.0f, 110.0f), sf::Vector2f(170.0f, 270.0f));
 	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve A*", E_PATHDINDER_METHOD::E_ASTAR, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
 	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve Dijkstra", E_PATHDINDER_METHOD::E_DIJKSTRA, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-50.0f, -10.0f));
-
+	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve BFS", E_PATHDINDER_METHOD::E_BREADTH_FIRST, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-50.0f, -10.0f));
 
 	
 }
@@ -162,8 +162,7 @@ void Application::HandleEvent(const sf::Event& pEvent)
 
 void Application::HandleInput(sf::Mouse::Button pButton, bool pPressed)
 {
-	/*if (pPressed)
-	{*/
+	
 		switch (pButton)
 		{
 		case sf::Mouse::Left:
@@ -189,6 +188,8 @@ void Application::HandleInput(sf::Mouse::Button pButton, bool pPressed)
 			break;
 		}
 		}
+
+
 		// Check which method is active and run active method (if any)
 		switch (this->m_eCurrentMethod)
 		{
@@ -198,10 +199,17 @@ void Application::HandleInput(sf::Mouse::Button pButton, bool pPressed)
 			break;
 		}
 		case E_PATHDINDER_METHOD::E_DIJKSTRA:
+		{
 			this->tPathFinder.SolveDijkstra(this->m_grid);
+
 			break;
 		}
-		
-	/*}*/
+		case E_PATHDINDER_METHOD::E_BREADTH_FIRST:
+		{
+			this->tPathFinder.SolveBFS(this->m_grid);
+			break;
+		}
+		}
+	
 
 }

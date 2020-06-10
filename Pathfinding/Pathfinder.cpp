@@ -3,6 +3,7 @@
 #include <list>
 #include <algorithm>
 #include <string>
+#include <queue>
 
 Pathfinder::Pathfinder()
 {
@@ -156,6 +157,67 @@ void Pathfinder::SolveDijkstra(Grid& pGrid)
 	}
 	// Draw the final path
 	DrawPath(pGrid);
+}
+
+void Pathfinder::SolveBFS(Grid& pGrid)
+{
+
+	//Reset Navigation graph - default states for all nodes
+	for (int x = 0; x < pGrid.m_GridWidth; x++)
+		for (int y = 0; y < pGrid.m_GridHeight; y++)
+		{
+
+			//If node is NOT an obstacle, set it an Unvisisted
+			if (!pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_bObstacle)
+			{
+				pGrid.SetNodeAsUnvisited(pGrid.m_vecNodes[y*pGrid.m_GridWidth + x]); // Experimental
+			}
+			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_gCost = INFINITY;
+			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_hCost = INFINITY;
+			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_parentNode = nullptr;
+		}
+
+	//set the current node as startNode
+	Node* tCurrentNode = pGrid.m_startNode;
+
+	std::queue<Node*> tOpenlist;
+
+	//Set current visited node as visited and enqueue it
+	
+	tOpenlist.push(tCurrentNode);
+	
+	pGrid.SetNodeAsVisited(*tCurrentNode);
+
+	//while the open list is not empty
+	while (!tOpenlist.empty())
+	{
+		//take the front node from queue
+		tCurrentNode = tOpenlist.front();
+		tOpenlist.pop(); // Dequeue the first element
+		pGrid.SetNodeAsVisited(*tCurrentNode); // set current node as visited
+
+		// if the end has been reached
+		if (tCurrentNode == pGrid.m_endNode)
+		{
+			break;
+		}
+
+		for (int i = 0; i < tCurrentNode->m_vecNeighbours.size(); ++i)
+		{
+			Node* tNeighbour= tCurrentNode->m_vecNeighbours[i];
+			//skip the neighbour if it has been visited already or it is an obstacle
+			if (tNeighbour->m_bVisited || tNeighbour->m_bObstacle)
+			{
+				continue;
+			}
+
+			tOpenlist.push(tNeighbour);
+			pGrid.SetNodeAsVisited(*tNeighbour);
+			tNeighbour->m_parentNode = tCurrentNode;
+		}
+		DrawPath(pGrid);
+	}
+	
 }
 
 void Pathfinder::DrawPath(Grid& pGrid)

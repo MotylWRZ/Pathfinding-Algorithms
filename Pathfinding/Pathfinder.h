@@ -8,6 +8,7 @@ public:
 
 	void SolveAStar(Grid& pGrid);
 	void SolveDijkstra(Grid& pGrid);
+	void SolveBFS(Grid& pGrid);
 	void DrawPath(Grid& pGrid);
 
 	float CalculateNodesDistance(Node* pNodeA, Node* pNodeB);
