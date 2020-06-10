@@ -1,15 +1,17 @@
 #include "GUI.h"
+#include "MousePointer.h"
 
 
 
-GUI::GUI(sf::Vector2f pPosition)
+GUI::GUI(sf::Vector2f pPosition, sf::Vector2f pSize)
 	: m_panelSpace(10)
+	, m_activeButtonPtr(nullptr)
 {
 	
 
 
 	
-	this->m_menuPanel.setSize(sf::Vector2f(300.0f, 500.0f));
+	this->m_menuPanel.setSize(pSize);
 	//this->m_menuPanel.setOrigin(sf::Vector2f(m_menuPanel.getSize().x / 2, m_menuPanel.getSize().y / 2));
 	this->m_menuPanel.setFillColor(sf::Color(128, 128, 128));
 	this->m_menuPanel.setOutlineColor(sf::Color(119, 136, 153));
@@ -34,16 +36,46 @@ GUI::~GUI()
 
 
 
-void GUI::AddButton(sf::Vector2f pSize, std::string pText, int pID, int pTextSize, sf::Vector2f pTextOffset)
+void GUI::AddButton(sf::Vector2f pSize, std::string pText, int pID, int pTextSize, sf::Color pButtonColor, sf::Color pTextColor, sf::Vector2f pTextOffset)
 {
 	//Create a button
-	Button* tButton = new Button(pSize, sf::Vector2f(50.0f, 100.0f), pText, pID, pTextSize, pTextOffset);
+	Button* tButton = new Button(pSize, sf::Vector2f(50.0f, 100.0f), pText, pID, pTextSize, pButtonColor, pTextColor, pTextOffset);
 	this->m_vecButtons.push_back(tButton);
 
 	// Update the panel and position all buttons
 	UpdatePanel();
 
 }
+
+void GUI::HandleInput(sf::Mouse::Button pButton, bool pPressed, MousePointer& pMousePointer)
+{
+	switch (pButton)
+	{
+	case sf::Mouse::Left:
+	{
+		for (auto& tButton : this->m_vecButtons)
+		{
+			if (tButton->GetBoundingBox().intersects(pMousePointer.getBoundingBox()))
+			{
+				// Set all active buttons to inactive
+				for (auto& tButton : this->m_vecButtons)
+				{
+					if (tButton->m_bActive)
+					{
+						tButton->SetActive(false);
+					}
+				}
+				//Activate clicked button
+				tButton->SetActive(true);
+				// Set clicked button as currently active button
+				SetActiveButton(tButton);
+			}
+		}
+		break;
+	}
+	}
+}
+
 
 void GUI::UpdatePanel()
 {

@@ -9,11 +9,13 @@
 
 
 
+
 Application::Application(int pWindowWidth, int pWindowHeight)
 	: m_window(sf::VideoMode(pWindowWidth, pWindowHeight), "PathfindingApplication")
 	, m_screenWidth(pWindowWidth)
 	, m_screenHeight(pWindowHeight)
 	, m_desiredUpdateTime(sf::seconds(1.0f / 60.0f))
+	, m_eCurrentMethod(E_PATHDINDER_METHOD::E_NONE)
 	
 
 {
@@ -24,15 +26,15 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	this->m_grid.createGrid(sf::Vector2f(100.0f, 100.0f), 20, 20, sf::Vector2f(20.0f, 20.0f), 1.0f);
 
 	//Create GUI
-	this->m_GUI = new GUI(sf::Vector2f(700.0f, 100.0f));
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Start", 1, 20, sf::Vector2f(-30.0f, -10.0f));
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Set End", 1, 20, sf::Vector2f(-30.0f, -10.0f));
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Obstacle", 1, 20, sf::Vector2f(-40.0f, -10.0f));
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve A*", 1, 20, sf::Vector2f(-30.0f, -10.0f));
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve Dijkstra", 1, 20, sf::Vector2f(-50.0f, -10.0f));
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1, 20);
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1, 20);
-	this->m_GUI->AddButton(sf::Vector2f(100.0f, 50.0f), "Hello", 1, 20);
+	this->m_nodesPanel = new GUI(sf::Vector2f(700.0f, 110.0f), sf::Vector2f(170.0f, 270.0f));
+	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Start", 1, 20, sf::Color::Green, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
+	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set End", 1, 20, sf::Color::Red, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
+	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Obstacle", 1, 20, sf::Color::Magenta, sf::Color::White, sf::Vector2f(-40.0f, -10.0f));
+
+	this->m_algorithmsPanel = new GUI(sf::Vector2f(900.0f, 110.0f), sf::Vector2f(170.0f, 270.0f));
+	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve A*", E_PATHDINDER_METHOD::E_ASTAR, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
+	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve Dijkstra", E_PATHDINDER_METHOD::E_DIJKSTRA, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-50.0f, -10.0f));
+
 
 	
 }
@@ -40,7 +42,8 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 
 Application::~Application()
 {
-	delete this->m_GUI;
+	delete this->m_nodesPanel;
+	delete this->m_algorithmsPanel;
 }
 
 void Application::Update(sf::Time pDeltaTime)
@@ -60,8 +63,9 @@ void Application::Render()
 	}
 
 	this->m_window.draw(this->m_mousePointer.m_rectShape);
-
-	this->m_GUI->Render(this->m_window);
+	//Render GUI
+	this->m_nodesPanel->Render(this->m_window);
+	this->m_algorithmsPanel->Render(this->m_window);
 
 	m_window.display();
 }
@@ -122,6 +126,11 @@ void Application::HandleEvent(const sf::Event& pEvent)
 	case sf::Event::MouseButtonPressed:
 	{
 		this->HandleInput(tEvent.mouseButton.button, true);
+		// Handle GUI Events
+		this->m_nodesPanel->HandleInput(tEvent.mouseButton.button, true, this->m_mousePointer);
+		this->m_algorithmsPanel->HandleInput(tEvent.mouseButton.button, true, this->m_mousePointer);
+		//Get current active Pathfinding method and assign the value to ECurrentMethod enum
+		this->m_eCurrentMethod = static_cast<E_PATHDINDER_METHOD>(this->m_algorithmsPanel->GetActiveButton()->GetID());
 		break;
 	}
 	case sf::Event::MouseButtonReleased:
@@ -140,6 +149,7 @@ void Application::HandleInput(sf::Mouse::Button pButton, bool pPressed)
 		{
 		case sf::Mouse::Left:
 		{
+			
 
 			for (auto& tNode : m_grid.m_vecNodes)
 			{
@@ -190,7 +200,17 @@ void Application::HandleInput(sf::Mouse::Button pButton, bool pPressed)
 			break;
 		}
 		}
-		this->tPathFinder.SolveAStar(this->m_grid);
+
+		// Check whicch method is active and run active method (if any)
+		switch (this->m_eCurrentMethod)
+		{
+		case E_PATHDINDER_METHOD::E_ASTAR:
+		{
+			this->tPathFinder.SolveAStar(this->m_grid);
+			break;
+		}
+		}
+		
 		
 	}
 

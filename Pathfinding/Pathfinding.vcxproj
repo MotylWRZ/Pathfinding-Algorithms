@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="AppStructures.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GUI.h" />

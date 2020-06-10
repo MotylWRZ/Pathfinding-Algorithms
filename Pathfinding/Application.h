@@ -4,7 +4,9 @@
 #include "Grid.h"
 #include "MousePointer.h"
 #include "Pathfinder.h"
-#include "GUI.h";
+#include "GUI.h"
+#include "AppStructures.h"
+
 
 class Application
 {
@@ -34,7 +36,10 @@ private:
 
 	//Create a pathfinder
 	Pathfinder tPathFinder;
-	GUI* m_GUI;
+	GUI* m_nodesPanel;
+	GUI* m_algorithmsPanel;
+
+	E_PATHDINDER_METHOD m_eCurrentMethod;
 	
 };
 

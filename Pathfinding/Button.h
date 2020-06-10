@@ -5,9 +5,10 @@
 class Button
 {
 public:
-	Button(sf::Vector2f pSize, sf::Vector2f pPosition, std::string pText, int pID, int pTextSizes, sf::Vector2f pTextOffset);
+	Button(sf::Vector2f pSize, sf::Vector2f pPosition, std::string pText, int pID, int pTextSize, sf::Color pButtonColor, sf::Color pTextColor, sf::Vector2f pTextOffset);
 	virtual ~Button();
 
+	void SetActive(bool pActive);
 	void Render(sf::RenderWindow& pWindow);
 
 	//Accesors/Mutators
@@ -19,7 +20,7 @@ public:
 	inline void SetButtonID(int ID) { m_ID = ID; }; //it can be also an enum value
 	void SetPosition(sf::Vector2f pPosition);
 
-
+	bool m_bActive;
 private:
 	sf::RectangleShape m_rectShape;
 	sf::Text m_buttonText;
@@ -27,6 +28,7 @@ private:
 	int m_textSize;
 	int m_ID;
 	sf::Font m_font;
+	
 
 
 };
