@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <string>
 #include <queue>
+#include <utility>
 
 Pathfinder::Pathfinder()
 {
@@ -113,47 +114,53 @@ void Pathfinder::SolveDijkstra(Grid& pGrid)
 	pGrid.m_startNode->m_gCost = 0.0f;
 	pGrid.m_startNode->m_hCost = 0.0f; //hCost = 0 as heuristic in Dijkstra == 0
 
-	//Add a list for notVisited nodes and add to it a startNode
-	std::list<Node*> tListNotVisitedNodes;
-	tListNotVisitedNodes.push_back(pGrid.m_startNode);
+	typedef std::pair<float, Node*> tNodeDistPair; // Create a pair with float(gCost) and Node pointer)
+	tNodeDistPair tCurrentNodePair;
+	tCurrentNodePair = std::make_pair(tCurrentNode->m_gCost, tCurrentNode); // make a pair of the Gcost and the Current node
 
+	//Add a priority queue for notVisited nodes and add to it a startNodePair
+	std::priority_queue<tNodeDistPair, std::vector<tNodeDistPair>, std::greater<tNodeDistPair>> tListNotVisitedNodes;
+	tListNotVisitedNodes.push(tCurrentNodePair);
+
+	// keep looping until the queue will be empty or the Current node will be the end node
 	while (!tListNotVisitedNodes.empty() && tCurrentNode != pGrid.m_endNode)
 	{
-
-		//Sort Unvisited nodes by global goal, so node with lowest cost first
-		tListNotVisitedNodes.sort([](const Node* lhs, const Node* rhs) {return lhs->m_hCost < rhs->m_hCost; });
-
-		while (!tListNotVisitedNodes.empty() && tListNotVisitedNodes.front()->m_bVisited)
-			tListNotVisitedNodes.pop_front();
-
-		if (tListNotVisitedNodes.empty())
-			break;
-
-		tCurrentNode = tListNotVisitedNodes.front();
-		// After the current node have been explored we change the bVisited flag to true
-		tCurrentNode->m_bVisited = true;
+		// Go to the node with the lowest cost (top() will return the element with the lowest first valuie (float gCost))
+		tCurrentNode = tListNotVisitedNodes.top().second;
+		// Set a current NodePair from the CurrentNode and its gCost
+		tCurrentNodePair = std::make_pair(tCurrentNode->m_gCost, tCurrentNode);
+		//Dequeue the top element (the one with the lowest gCost)
+		tListNotVisitedNodes.pop();
+		//Set the current node as visited
 		pGrid.SetNodeAsVisited(*tCurrentNode);
 
-		//Check all negighbours of this node
-		for (auto tNodeNeighbour : tCurrentNode->m_vecNeighbours)
+		// Loop over all current node's neighbours
+		for (int i = 0; i < tCurrentNode->m_vecNeighbours.size(); ++i)
 		{
-			//If the neighbour of the current node is NOT visited and is NOT an obstacle, we add
-			//it to NotVisited List
-			if (!tNodeNeighbour->m_bVisited && tNodeNeighbour->m_bObstacle == 0)
-				tListNotVisitedNodes.push_back(tNodeNeighbour);
-
-			// Calculate the neighbours lowest parent distance
-			float tLowerGoal = tCurrentNode->m_gCost + CalculateNodesDistance(tCurrentNode, tNodeNeighbour);
-
-			if (tLowerGoal < tNodeNeighbour->m_gCost)
+			Node* tNeighbour = tCurrentNode->m_vecNeighbours[i];
+			//skip the neighbour if it has been visited already, is an obstacle or if Current node is an endNode
+			if (tNeighbour->m_bVisited || tNeighbour->m_bObstacle || tCurrentNode == pGrid.m_endNode)
 			{
-				tNodeNeighbour->m_parentNode = tCurrentNode;
-				tNodeNeighbour->m_gCost = tLowerGoal;
+				continue;
+			}
+			// Calculate the lower goal from Gcost and the current distance between this neigbour and the current node
+			float tLowerGoal = tCurrentNode->m_gCost + CalculateNodesDistance(tCurrentNode, tNeighbour);
 
-				tNodeNeighbour->m_hCost = tNodeNeighbour->m_gCost + 0.0f; // 0.0f is a heuristic
+			// If the Lower goal value is < the gCost of the current neighbour
+			if (tLowerGoal < tNeighbour->m_gCost)
+			{
+				// Update the gCost of this neighbour 
+				tNeighbour->m_gCost = tLowerGoal;
+				// Set the parent node as the current node for this neighbour
+				tNeighbour->m_parentNode = tCurrentNode;
+				// Set the currentNodePair as the current neigbour's gCost and the pointer to it
+				tCurrentNodePair = std::make_pair(tNeighbour->m_gCost, tNeighbour);
+				// Enqueue the currentNodePair
+				tListNotVisitedNodes.push(tCurrentNodePair);
+				// Set this neighbour as visisted node
+				pGrid.SetNodeAsVisited(*tNeighbour);
 			}
 		}
-
 	}
 	// Draw the final path
 	DrawPath(pGrid);

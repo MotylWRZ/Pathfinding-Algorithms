@@ -1,3 +1,5 @@
-﻿  Application.cpp
-c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev23_wip\pathfinding\node.h(11): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-  Pathfinding.vcxproj -> C:\Users\Motyl\Desktop\SFMLBaseProjectTest\PathFindingSourceV23_WIP\Debug\Pathfinding.exe
+﻿  Pathfinder.cpp
+c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev24_wip\pathfinding\node.h(11): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev24_wip\pathfinding\pathfinder.cpp(138): warning C4018: '<': signed/unsigned mismatch
+c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev24_wip\pathfinding\pathfinder.cpp(212): warning C4018: '<': signed/unsigned mismatch
+  Pathfinding.vcxproj -> C:\Users\Motyl\Desktop\SFMLBaseProjectTest\PathFindingSourceV24_WIP\Debug\Pathfinding.exe
