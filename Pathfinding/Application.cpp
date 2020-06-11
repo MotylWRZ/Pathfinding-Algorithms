@@ -18,13 +18,14 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	, m_eCurrentMethod(E_PATHDINDER_METHOD::E_NONE)
 	, m_leftMouseBtnPressed(false)
 	
+	
 
 {
 	//Initialise Mouse Pointer
 	this->m_mousePointer.Initialise(this->m_window);
 
 	//Create a grid of nodes
-	this->m_grid.createGrid(sf::Vector2f(100.0f, 100.0f), 20, 20, sf::Vector2f(20.0f, 20.0f), 1.0f);
+	this->m_grid.createGrid(sf::Vector2f(100.0f, 100.0f), 30, 30, sf::Vector2f(17.0f, 17.0f), 1.0f);
 
 	//Create GUI
 	this->m_nodesPanel = new GUI(sf::Vector2f(700.0f, 110.0f), sf::Vector2f(170.0f, 270.0f));

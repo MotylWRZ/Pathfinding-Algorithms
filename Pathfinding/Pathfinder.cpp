@@ -7,6 +7,7 @@
 #include <utility>
 
 Pathfinder::Pathfinder()
+	: m_bPathDrawn(false)
 {
 }
 
@@ -231,6 +232,10 @@ void Pathfinder::SolveBFS(Grid& pGrid)
 
 void Pathfinder::Reset(Grid& pGrid)
 {
+	// Do not continue if path is not drawn
+	if (!this->m_bPathDrawn)
+		return;
+
 	//Reset Navigation graph - default states for all nodes
 	for (int x = 0; x < pGrid.m_GridWidth; x++)
 		for (int y = 0; y < pGrid.m_GridHeight; y++)
@@ -245,6 +250,8 @@ void Pathfinder::Reset(Grid& pGrid)
 			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_hCost = INFINITY;
 			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_parentNode = nullptr;
 		}
+
+	this->m_bPathDrawn = false;
 }
 
 void Pathfinder::DrawPath(Grid& pGrid)
@@ -258,5 +265,7 @@ void Pathfinder::DrawPath(Grid& pGrid)
 			tPath->m_parentNode->m_rectShape.setFillColor(sf::Color::Blue);
 			tPath = tPath->m_parentNode;
 		}
+
+		this->m_bPathDrawn = true;
 	}
 }

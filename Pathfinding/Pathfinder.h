@@ -14,5 +14,9 @@ public:
 
 	float CalculateNodesDistance(Node* pNodeA, Node* pNodeB);
 
+
+private:
+	bool m_bPathDrawn;
+
 };
 

@@ -45,5 +45,6 @@ private:
 
 	bool m_leftMouseBtnPressed;
 	
+	
 };
 
