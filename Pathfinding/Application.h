@@ -24,6 +24,13 @@ public:
 
 
 private:
+	void RunChosenAlgorithm();
+	void ProcessMenuInputs();
+	void InitialiseAppGUI();
+
+
+
+private:
 	sf::Event m_event;
 	sf::RenderWindow m_window;
 	std::size_t m_screenWidth;
@@ -37,11 +44,14 @@ private:
 
 	//Create a pathfinder
 	Pathfinder m_PathFinder;
+	
 	GUI* m_nodesPanel;
 	GUI* m_algorithmsPanel;
+	GUI* m_mainPanel;
 
 	E_PATHDINDER_METHOD m_eCurrentMethod;
 	E_ACTIVE_NODE m_eCurrentNode;
+	E_APP_MENU m_eCurrentAppOption;
 
 	bool m_leftMouseBtnPressed;
 	
