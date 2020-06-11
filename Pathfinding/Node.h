@@ -8,11 +8,23 @@ public:
 
 
 	//Accesors/Mutators
-	inline int GetFCost() { return m_gCost + m_hCost; };
-	
+	inline Node* getParentNode() { return m_parentNode; };
+	inline float GetGCost() { return m_gCost; };
+	inline float GetHCost() { return m_hCost; };
+	inline std::vector<Node*>& GetNeighbours() { return m_vecNeighbours; };
+	inline sf::Vector2f GetPosition() { return m_position; };
+	inline sf::RectangleShape& GetShape() { return m_rectShape; };
+	inline bool IsObstacle() { return m_bObstacle; };
+	inline bool IsVisited() { return m_bVisited; };
+
+	inline void SetParentNode(Node* pParent) { m_parentNode = pParent; };
+	inline void SetGCost(float pGCost) { m_gCost = pGCost; };
+	inline void SetHCost(float pHCost) { m_hCost = pHCost; };
+	inline void SetAsObstacle(bool pIsObstacle) { m_bObstacle = pIsObstacle; };
+	inline void SetAsVisited(bool pIsVisited) { m_bVisited = pIsVisited; };
 
 
-public:
+private:
 	bool m_bObstacle;
 	bool m_bVisited;
 	

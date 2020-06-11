@@ -33,12 +33,12 @@ void Grid::createGrid(sf::Vector2f pGridPosition, int pWidth, int pHeight, sf::V
 		for (int j = 1; j < pHeight; j++)
 		{
 
-			tPos.y += tNode.m_rectShape.getSize().y + pTileSpace;
+			tPos.y += tNode.GetShape().getSize().y + pTileSpace;
 			Node tNode = Node(false, tPos, pTileSize);
 			this->m_vecNodes.push_back(tNode);
 			
 		}
-		tPos.x += tNode.m_rectShape.getSize().x + pTileSpace;
+		tPos.x += tNode.GetShape().getSize().x + pTileSpace;
 		tPos.y = this->m_gridPosition.y;
 	}
 
@@ -49,19 +49,19 @@ void Grid::createGrid(sf::Vector2f pGridPosition, int pWidth, int pHeight, sf::V
 		{
 			if (y > 0)
 			{
-				this->m_vecNodes[y*pWidth + x].m_vecNeighbours.push_back(&m_vecNodes[(y - 1) * pWidth + (x + 0)]);
+				this->m_vecNodes[y*pWidth + x].GetNeighbours().push_back(&m_vecNodes[(y - 1) * pWidth + (x + 0)]);
 			}
 			if (y < pHeight - 1)
 			{
-				this->m_vecNodes[y*pWidth + x].m_vecNeighbours.push_back(&m_vecNodes[(y + 1) * pWidth + (x + 0)]);
+				this->m_vecNodes[y*pWidth + x].GetNeighbours().push_back(&m_vecNodes[(y + 1) * pWidth + (x + 0)]);
 			}
 			if (x > 0)
 			{
-				m_vecNodes[y * pWidth + x].m_vecNeighbours.push_back(&m_vecNodes[(y + 0) * pWidth + (x - 1)]);
+				m_vecNodes[y * pWidth + x].GetNeighbours().push_back(&m_vecNodes[(y + 0) * pWidth + (x - 1)]);
 			}
 			if (x < pWidth - 1)
 			{
-				m_vecNodes[y * pWidth + x].m_vecNeighbours.push_back(&m_vecNodes[(y + 0) * pWidth + (x + 1)]);
+				m_vecNodes[y * pWidth + x].GetNeighbours().push_back(&m_vecNodes[(y + 0) * pWidth + (x + 1)]);
 			}
 
 
@@ -69,19 +69,19 @@ void Grid::createGrid(sf::Vector2f pGridPosition, int pWidth, int pHeight, sf::V
 			// Create Diagonal connections between nodes
 			if (y > 0 && x > 0)
 			{
-				m_vecNodes[y*pWidth + x].m_vecNeighbours.push_back(&m_vecNodes[(y - 1) * pWidth + (x - 1)]);
+				m_vecNodes[y*pWidth + x].GetNeighbours().push_back(&m_vecNodes[(y - 1) * pWidth + (x - 1)]);
 			}
 			if (y < pHeight - 1 && x > 0)
 			{
-				m_vecNodes[y*pWidth + x].m_vecNeighbours.push_back(&m_vecNodes[(y + 1) * pWidth + (x - 1)]);
+				m_vecNodes[y*pWidth + x].GetNeighbours().push_back(&m_vecNodes[(y + 1) * pWidth + (x - 1)]);
 			}
 			if (y > 0 && x < pWidth - 1)
 			{
-				m_vecNodes[y*pWidth + x].m_vecNeighbours.push_back(&m_vecNodes[(y - 1) * pWidth + (x + 1)]);
+				m_vecNodes[y*pWidth + x].GetNeighbours().push_back(&m_vecNodes[(y - 1) * pWidth + (x + 1)]);
 			}
 			if (y < pWidth - 1 && x < pWidth - 1)
 			{
-				m_vecNodes[y*pWidth + x].m_vecNeighbours.push_back(&m_vecNodes[(y + 1) * pWidth + (x + 1)]);
+				m_vecNodes[y*pWidth + x].GetNeighbours().push_back(&m_vecNodes[(y + 1) * pWidth + (x + 1)]);
 			}
 		}
 
@@ -92,31 +92,31 @@ void Grid::createGrid(sf::Vector2f pGridPosition, int pWidth, int pHeight, sf::V
 	m_startNode = &m_vecNodes[(pHeight / 2) * pWidth + 1];
 	m_endNode = &m_vecNodes[(pHeight / 2) * pWidth + pWidth - 2];
 
-	m_startNode->m_rectShape.setFillColor(sf::Color::Green);
-	m_endNode->m_rectShape.setFillColor(sf::Color::Red);
+	m_startNode->GetShape().setFillColor(sf::Color::Green);
+	m_endNode->GetShape().setFillColor(sf::Color::Red);
 }
 
 
 void Grid::SetNewStartNode(Node& pNode)
 {
 	//Set the color of current StartNode to white
-	this->m_startNode->m_rectShape.setFillColor(sf::Color::White);
+	this->m_startNode->GetShape().setFillColor(sf::Color::White);
 	//Then set the pointer to null
 	this->m_startNode = nullptr;
 	// Point to a new start node
 	this->m_startNode = &pNode;
-	pNode.m_rectShape.setFillColor(sf::Color::Green);
+	pNode.GetShape().setFillColor(sf::Color::Green);
 }
 
 void Grid::SetNewEndNode(Node& pNode)
 {
 	//Set the color of current EndNode to white
-	this->m_endNode->m_rectShape.setFillColor(sf::Color::White);
+	this->m_endNode->GetShape().setFillColor(sf::Color::White);
 	//Then set the pointer to null
 	this->m_endNode = nullptr;
 	// Point to a new end node
 	this->m_endNode = &pNode;
-	pNode.m_rectShape.setFillColor(sf::Color::Red);
+	pNode.GetShape().setFillColor(sf::Color::Red);
 }
 
 void Grid::SetNodeAsUnvisited(Node& pNode)
@@ -124,12 +124,12 @@ void Grid::SetNodeAsUnvisited(Node& pNode)
 	//Check if the node is a start/end node
 	if (&pNode != this->m_startNode && &pNode != this->m_endNode )
 	{
-		pNode.m_bVisited = false;
-		pNode.m_rectShape.setFillColor(sf::Color::White);
+		pNode.SetAsVisited(false);
+		pNode.GetShape().setFillColor(sf::Color::White);
 	}
 	else
 	{
-		pNode.m_bVisited = false;
+		pNode.SetAsVisited(false);
 	}
 }
 
@@ -138,12 +138,12 @@ void Grid::SetNodeAsVisited(Node& pNode)
 	//Check if the node is a start/end node
 	if (&pNode != this->m_startNode && &pNode != this->m_endNode)
 	{
-		pNode.m_bVisited = true;
-		pNode.m_rectShape.setFillColor(sf::Color::Yellow);
+		pNode.SetAsVisited(true); 
+		pNode.GetShape().setFillColor(sf::Color::Yellow);
 	}
 	else
 	{
-		pNode.m_bVisited = true;
+		pNode.SetAsVisited(true);
 	}
 }
 
@@ -151,8 +151,8 @@ void Grid::SetNodeAsObstacle(Node& pNode)
 {
 	if (&pNode != this->m_startNode && &pNode != this->m_endNode)
 	{
-		pNode.m_bObstacle = true;
-		pNode.m_rectShape.setFillColor(sf::Color::Magenta);
+		pNode.SetAsObstacle(true);
+		pNode.GetShape().setFillColor(sf::Color::Magenta);
 	}
 }
 
@@ -160,8 +160,8 @@ void Grid::SetNodeAsNonObstacle(Node& pNode)
 {
 	if (&pNode != this->m_startNode && &pNode != this->m_endNode)
 	{
-		pNode.m_bObstacle = false;
-		pNode.m_rectShape.setFillColor(sf::Color::White);
+		pNode.SetAsObstacle(false);
+		pNode.GetShape().setFillColor(sf::Color::White);
 	}
 }
 
@@ -176,7 +176,7 @@ void Grid::DrawNodes(E_ACTIVE_NODE pActiveNodeType, MousePointer& pMousePointer)
 	{
 		for (auto& tNode : this->m_vecNodes)
 		{
-			if (tNode.m_rectShape.getGlobalBounds().intersects(pMousePointer.getBoundingBox()) && &tNode != m_endNode && !tNode.m_bObstacle)
+			if (tNode.GetShape().getGlobalBounds().intersects(pMousePointer.getBoundingBox()) && &tNode != m_endNode && !tNode.IsObstacle())
 			{
 				//Set the clicked node as the new StartNode
 				SetNewStartNode(tNode);
@@ -188,7 +188,7 @@ void Grid::DrawNodes(E_ACTIVE_NODE pActiveNodeType, MousePointer& pMousePointer)
 	{
 		for (auto& tNode : this->m_vecNodes)
 		{
-			if (tNode.m_rectShape.getGlobalBounds().intersects(pMousePointer.getBoundingBox()) && &tNode != m_startNode && !tNode.m_bObstacle)
+			if (tNode.GetShape().getGlobalBounds().intersects(pMousePointer.getBoundingBox()) && &tNode != m_startNode && !tNode.IsObstacle())
 			{
 				//Set the clicked node as the new EndNode
 				SetNewEndNode(tNode);
@@ -201,9 +201,9 @@ void Grid::DrawNodes(E_ACTIVE_NODE pActiveNodeType, MousePointer& pMousePointer)
 
 		for (auto& tNode : this->m_vecNodes)
 		{
-			if (tNode.m_rectShape.getGlobalBounds().intersects(pMousePointer.getBoundingBox()))
+			if (tNode.GetShape().getGlobalBounds().intersects(pMousePointer.getBoundingBox()))
 			{
-				if (!tNode.m_bObstacle)
+				if (!tNode.IsObstacle())
 				{
 					SetNodeAsObstacle(tNode);
 				}
@@ -214,9 +214,9 @@ void Grid::DrawNodes(E_ACTIVE_NODE pActiveNodeType, MousePointer& pMousePointer)
 	case E_ACTIVE_NODE::E_NODE_NO_OBSTACLE:
 		for (auto& tNode : this->m_vecNodes)
 		{
-		if(tNode.m_rectShape.getGlobalBounds().intersects(pMousePointer.getBoundingBox()))
+		if(tNode.GetShape().getGlobalBounds().intersects(pMousePointer.getBoundingBox()))
 		{
-			if (tNode.m_bObstacle)
+			if (tNode.IsObstacle())
 			{
 				SetNodeAsNonObstacle(tNode);
 			}

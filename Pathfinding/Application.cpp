@@ -71,7 +71,7 @@ void Application::Render()
 	// Render all nodes
 	for (auto& tNode : m_grid.m_vecNodes)
 	{
-		this->m_window.draw(tNode.m_rectShape);
+		this->m_window.draw(tNode.GetShape());
 	}
 
 	this->m_window.draw(this->m_mousePointer.m_rectShape);
