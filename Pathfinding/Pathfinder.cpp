@@ -26,25 +26,25 @@ float Pathfinder::CalculateNodesDistance(Node* pNodeA, Node* pNodeB)
 void Pathfinder::SolveAStar(Grid& pGrid)
 {
 	//Reset Navigation graph - default states for all nodes
-	for(int x = 0; x < pGrid.m_GridWidth; x++)
-		for (int y = 0; y < pGrid.m_GridHeight; y++)
+	for(int x = 0; x < pGrid.GetGridWidth(); x++)
+		for (int y = 0; y < pGrid.GetGridHeight(); y++)
 		{
 			
 			//If node is NOT an obstacle, set it an Unvisisted
-			if (!pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].IsObstacle())
+			if (!pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].IsObstacle())
 			{
-				pGrid.SetNodeAsUnvisited(pGrid.m_vecNodes[y*pGrid.m_GridWidth + x]);
+				pGrid.SetNodeAsUnvisited(pGrid.GetNodes()[y*pGrid.GetGridWidth()+ x]);
 			}
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].SetGCost(INFINITY);
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].SetHCost(INFINITY);
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].SetParentNode(nullptr);
+			pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].SetGCost(INFINITY);
+			pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].SetHCost(INFINITY);
+			pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].SetParentNode(nullptr);
 		}
 
 	//Setup Starting conditions
 	//Create a pointer to current node that is explored
-	Node* tCurrentNode = pGrid.m_startNode;
-	pGrid.m_startNode->SetGCost(0.0f);
-	pGrid.m_startNode->SetHCost(CalculateNodesDistance(pGrid.m_startNode, pGrid.m_endNode)); //Calculate heuristic
+	Node* tCurrentNode = pGrid.GetStartNode();
+	pGrid.GetStartNode()->SetGCost(0.0f);
+	pGrid.GetStartNode()->SetHCost(CalculateNodesDistance(pGrid.GetStartNode(), pGrid.GetEndNode())); //Calculate heuristic
 	
 
 	typedef std::pair<float, Node*> tNodeDistPair; // Create a pair with float(gCost) and Node pointer)
@@ -56,7 +56,7 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 	tListNotVisitedNodes.push(tCurrentNodePair);
 
 
-	while (!tListNotVisitedNodes.empty() && tCurrentNode != pGrid.m_endNode)
+	while (!tListNotVisitedNodes.empty() && tCurrentNode != pGrid.GetEndNode())
 	{
 		
 		// Go to the node with the lowest cost (top() will return the element with the lowest first valuie (float gCost))
@@ -73,7 +73,7 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 		{
 			Node* tNeighbour = tNodeNeighbour;
 			//skip the neighbour if it has been visited already, is an obstacle or if Current node is an endNode
-			if (tNeighbour->IsVisited()|| tNeighbour->IsObstacle() || tCurrentNode == pGrid.m_endNode)
+			if (tNeighbour->IsVisited()|| tNeighbour->IsObstacle() || tCurrentNode == pGrid.GetEndNode())
 			{
 				continue;
 			}
@@ -86,7 +86,7 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 				// Update the gCost of this neighbour 
 				tNeighbour->SetGCost(tLowerGoal);
 				//Calculate heuristic between neighbour and endNode
-				tNodeNeighbour->SetHCost(tNodeNeighbour->GetGCost() + CalculateNodesDistance(tNodeNeighbour, pGrid.m_endNode));
+				tNodeNeighbour->SetHCost(tNodeNeighbour->GetGCost() + CalculateNodesDistance(tNodeNeighbour, pGrid.GetEndNode()));
 				// Set the parent node as the current node for this neighbour
 				tNeighbour->SetParentNode(tCurrentNode);
 				// Set the currentNodePair as the current neigbour's gCost and the pointer to it
@@ -107,24 +107,24 @@ void Pathfinder::SolveDijkstra(Grid& pGrid)
 {
 	
 	//Reset Navigation graph - default states for all nodes
-	for (int x = 0; x < pGrid.m_GridWidth; x++)
-		for (int y = 0; y < pGrid.m_GridHeight; y++)
+	for (int x = 0; x < pGrid.GetGridWidth(); x++)
+		for (int y = 0; y < pGrid.GetGridHeight(); y++)
 		{
 
 			//If node is NOT an obstacle, set it an Unvisisted
-			if (!pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].IsObstacle())
+			if (!pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].IsObstacle())
 			{
-				pGrid.SetNodeAsUnvisited(pGrid.m_vecNodes[y*pGrid.m_GridWidth + x]);
+				pGrid.SetNodeAsUnvisited(pGrid.GetNodes()[y*pGrid.GetGridWidth() + x]);
 			}
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].SetGCost(INFINITY);
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].SetHCost(INFINITY);
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].SetParentNode(nullptr);
+			pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].SetGCost(INFINITY);
+			pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].SetHCost(INFINITY);
+			pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].SetParentNode(nullptr);
 		}
 	//Setup Starting conditions
 	//Create a pointer to current node that is explored
-	Node* tCurrentNode = pGrid.m_startNode;
-	pGrid.m_startNode->SetGCost(0.0f);
-	pGrid.m_startNode->SetHCost(0.0f); //hCost = 0 as heuristic in Dijkstra == 0
+	Node* tCurrentNode = pGrid.GetStartNode();
+	pGrid.GetStartNode()->SetGCost(0.0f);
+	pGrid.GetStartNode()->SetHCost(0.0f); //hCost = 0 as heuristic in Dijkstra == 0
 
 	typedef std::pair<float, Node*> tNodeDistPair; // Create a pair with float(gCost) and Node pointer)
 	tNodeDistPair tCurrentNodePair;
@@ -135,7 +135,7 @@ void Pathfinder::SolveDijkstra(Grid& pGrid)
 	tListNotVisitedNodes.push(tCurrentNodePair);
 
 	// keep looping until the queue will be empty or the Current node will be the end node
-	while (!tListNotVisitedNodes.empty() && tCurrentNode != pGrid.m_endNode)
+	while (!tListNotVisitedNodes.empty() && tCurrentNode != pGrid.GetEndNode())
 	{
 		// Go to the node with the lowest cost (top() will return the element with the lowest first valuie (float gCost))
 		tCurrentNode = tListNotVisitedNodes.top().second;
@@ -151,7 +151,7 @@ void Pathfinder::SolveDijkstra(Grid& pGrid)
 		{
 			Node* tNeighbour = tCurrentNode->GetNeighbours()[i];
 			//skip the neighbour if it has been visited already, is an obstacle or if Current node is an endNode
-			if (tNeighbour->IsVisited() || tNeighbour->IsObstacle() || tCurrentNode == pGrid.m_endNode)
+			if (tNeighbour->IsVisited() || tNeighbour->IsObstacle() || tCurrentNode == pGrid.GetEndNode())
 			{
 				continue;
 			}
@@ -182,22 +182,22 @@ void Pathfinder::SolveBFS(Grid& pGrid)
 {
 
 	//Reset Navigation graph - default states for all nodes
-	for (int x = 0; x < pGrid.m_GridWidth; x++)
-		for (int y = 0; y < pGrid.m_GridHeight; y++)
+	for (int x = 0; x < pGrid.GetGridWidth(); x++)
+		for (int y = 0; y < pGrid.GetGridHeight(); y++)
 		{
 
 			//If node is NOT an obstacle, set it an Unvisisted
-			if (!pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].IsObstacle())
+			if (!pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].IsObstacle())
 			{
-				pGrid.SetNodeAsUnvisited(pGrid.m_vecNodes[y*pGrid.m_GridWidth + x]);
+				pGrid.SetNodeAsUnvisited(pGrid.GetNodes()[y*pGrid.GetGridWidth() + x]);
 			}
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].SetGCost(INFINITY);
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].SetHCost(INFINITY);
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].SetParentNode(nullptr);
+			pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].SetGCost(INFINITY);
+			pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].SetHCost(INFINITY);
+			pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].SetParentNode(nullptr);
 		}
 
 	//set the current node as startNode
-	Node* tCurrentNode = pGrid.m_startNode;
+	Node* tCurrentNode = pGrid.GetStartNode();
 
 	std::queue<Node*> tOpenlist;
 
@@ -216,7 +216,7 @@ void Pathfinder::SolveBFS(Grid& pGrid)
 		pGrid.SetNodeAsVisited(*tCurrentNode); // set current node as visited
 
 		// if the end has been reached
-		if (tCurrentNode == pGrid.m_endNode)
+		if (tCurrentNode == pGrid.GetEndNode())
 		{
 			break;
 		}
@@ -248,18 +248,18 @@ void Pathfinder::Reset(Grid& pGrid)
 		return;
 
 	//Reset Navigation graph - default states for all nodes
-	for (int x = 0; x < pGrid.m_GridWidth; x++)
-		for (int y = 0; y < pGrid.m_GridHeight; y++)
+	for (int x = 0; x < pGrid.GetGridWidth(); x++)
+		for (int y = 0; y < pGrid.GetGridHeight(); y++)
 		{
 
 			//If node is NOT an obstacle, set it an Unvisisted
-			if (!pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].IsObstacle())
+			if (!pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].IsObstacle())
 			{
-				pGrid.SetNodeAsUnvisited(pGrid.m_vecNodes[y*pGrid.m_GridWidth + x]);
+				pGrid.SetNodeAsUnvisited(pGrid.GetNodes()[y*pGrid.GetGridWidth() + x]);
 			}
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].SetGCost(INFINITY);
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].SetHCost(INFINITY);
-			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].SetParentNode(nullptr);
+			pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].SetGCost(INFINITY);
+			pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].SetHCost(INFINITY);
+			pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].SetParentNode(nullptr);
 		}
 
 	this->m_bPathDrawn = false;
@@ -267,11 +267,11 @@ void Pathfinder::Reset(Grid& pGrid)
 
 void Pathfinder::DrawPath(Grid& pGrid)
 {
-	if (pGrid.m_endNode != nullptr)
+	if (pGrid.GetEndNode() != nullptr)
 	{
-		Node* tPath = pGrid.m_endNode;
+		Node* tPath = pGrid.GetEndNode();
 		
-		while (tPath->getParentNode() != nullptr && tPath->getParentNode() != pGrid.m_startNode)
+		while (tPath->getParentNode() != nullptr && tPath->getParentNode() != pGrid.GetStartNode())
 		{
 			tPath->getParentNode()->GetShape().setFillColor(sf::Color::Blue);
 			tPath = tPath->getParentNode();

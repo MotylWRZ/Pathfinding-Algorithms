@@ -13,15 +13,16 @@ public:
 	void Update();
 	
 	//Accesors/Mutators
+	inline sf::Vector2f getPosition() { return m_position; };
+	inline sf::FloatRect getBoundingBox() { return m_rectShape.getGlobalBounds(); };
 
 	void SetCurrentWindow(sf::RenderWindow& pWindow);
 
 
-	//Pointer to curent window
+	//Pointer to current window
 	sf::RenderWindow* m_currentWindowPtr;
 
-	inline sf::Vector2f getPosition() { return m_position; };
-	inline sf::FloatRect getBoundingBox() { return m_rectShape.getGlobalBounds(); };
+	
 
 
 	sf::RectangleShape m_rectShape;

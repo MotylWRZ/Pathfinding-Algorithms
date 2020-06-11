@@ -69,7 +69,7 @@ void Application::Render()
 	m_window.clear();
 
 	// Render all nodes
-	for (auto& tNode : m_grid.m_vecNodes)
+	for (auto& tNode : m_grid.GetNodes())
 	{
 		this->m_window.draw(tNode.GetShape());
 	}
