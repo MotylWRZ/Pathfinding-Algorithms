@@ -28,19 +28,24 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	this->m_grid.createGrid(sf::Vector2f(100.0f, 100.0f), 30, 30, sf::Vector2f(17.0f, 17.0f), 1.0f);
 
 	//Create GUI
-	this->m_nodesPanel = new GUI(sf::Vector2f(700.0f, 110.0f), sf::Vector2f(170.0f, 270.0f));
+	this->m_nodesPanel = new GUI(sf::Vector2f(700.0f, 110.0f), sf::Vector2f(170.0f, 300.0f));
+	//add non clickable button for panel title
+	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 0.0f), "Nodes Panel", 10, 20, sf::Color::Transparent, sf::Color::White, sf::Vector2f(-40.0f, -10.0f), false);
+
 	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Start", E_ACTIVE_NODE::E_NODE_START, 20, sf::Color::Green, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
 	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set End", E_ACTIVE_NODE::E_NODE_END, 20, sf::Color::Red, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
 	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Obstacle", E_ACTIVE_NODE::E_NODE_OBSTACLE, 20, sf::Color::Magenta, sf::Color::White, sf::Vector2f(-40.0f, -10.0f));
-	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Remove Obstacle", E_ACTIVE_NODE::E_NODE_NO_OBSTACLE, 15, sf::Color::White, sf::Color::Black, sf::Vector2f(-40.0f, -10.0f));
+	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Remove Obstacle", E_ACTIVE_NODE::E_NODE_NO_OBSTACLE, 15, sf::Color::White, sf::Color::Black, sf::Vector2f(-45.0f, -10.0f));
 
 
 	this->m_algorithmsPanel = new GUI(sf::Vector2f(900.0f, 110.0f), sf::Vector2f(170.0f, 270.0f));
+	//add non clickable button for panel title
+	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 0.0f), "Algorithms Panel", 10, 20, sf::Color::Transparent, sf::Color::White, sf::Vector2f(-60.0f, -10.0f), false);
 	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "None", E_PATHDINDER_METHOD::E_NONE, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
 	this->m_algorithmsPanel->SetActiveButton(this->m_algorithmsPanel->GetButtonWithID(E_PATHDINDER_METHOD::E_NONE)); // set this button as a default active button
 	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve A*", E_PATHDINDER_METHOD::E_ASTAR, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
 	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve Dijkstra", E_PATHDINDER_METHOD::E_DIJKSTRA, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-50.0f, -10.0f));
-	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve BFS", E_PATHDINDER_METHOD::E_BREADTH_FIRST, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-50.0f, -10.0f));
+	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve BFS", E_PATHDINDER_METHOD::E_BREADTH_FIRST, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-40.0f, -10.0f));
 
 	
 }
@@ -60,6 +65,36 @@ void Application::Update(sf::Time pDeltaTime)
 	if (this->m_leftMouseBtnPressed)
 	{
 		this->m_grid.DrawNodes(this->m_eCurrentNode, this->m_mousePointer);
+
+
+		// Check which method is active and run active method (if any)
+		switch (this->m_eCurrentMethod)
+		{
+		case E_PATHDINDER_METHOD::E_NONE:
+		{
+			this->m_PathFinder.Reset(this->m_grid);
+			break;
+		}
+		case E_PATHDINDER_METHOD::E_ASTAR:
+		{
+			this->m_PathFinder.SolveAStar(this->m_grid);
+			break;
+		}
+		case E_PATHDINDER_METHOD::E_DIJKSTRA:
+		{
+			this->m_PathFinder.SolveDijkstra(this->m_grid);
+
+			break;
+		}
+		case E_PATHDINDER_METHOD::E_BREADTH_FIRST:
+		{
+			this->m_PathFinder.SolveBFS(this->m_grid);
+			break;
+		}
+		}
+
+
+
 	}
 }
 
@@ -194,31 +229,7 @@ void Application::HandleInput(sf::Mouse::Button pButton, bool pPressed)
 		}
 
 
-		// Check which method is active and run active method (if any)
-		switch (this->m_eCurrentMethod)
-		{
-		case E_PATHDINDER_METHOD::E_NONE:
-		{
-			this->m_PathFinder.Reset(this->m_grid);
-			break;
-		}
-		case E_PATHDINDER_METHOD::E_ASTAR:
-		{
-			this->m_PathFinder.SolveAStar(this->m_grid);
-			break;
-		}
-		case E_PATHDINDER_METHOD::E_DIJKSTRA:
-		{
-			this->m_PathFinder.SolveDijkstra(this->m_grid);
-
-			break;
-		}
-		case E_PATHDINDER_METHOD::E_BREADTH_FIRST:
-		{
-			this->m_PathFinder.SolveBFS(this->m_grid);
-			break;
-		}
-		}
+	
 	
 
 }

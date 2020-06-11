@@ -2,7 +2,7 @@
 
 
 
-Button::Button(sf::Vector2f pSize, sf::Vector2f pPosition, std::string pText, int pID, int pTextSize,sf::Color pButtonColor, sf::Color pTextColor, sf::Vector2f pTextOffset)
+Button::Button(sf::Vector2f pSize, sf::Vector2f pPosition, std::string pText, int pID, int pTextSize,sf::Color pButtonColor, sf::Color pTextColor, sf::Vector2f pTextOffset, bool pIsClickable)
 	: m_ID(pID)
 	, m_textOffset(pTextOffset)
 	, m_textSize(pTextSize)

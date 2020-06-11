@@ -1,17 +1,2 @@
 ﻿  Application.cpp
-  GUI.cpp
-c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev29_wip\pathfinding\gui.cpp(29): warning C4018: '<': signed/unsigned mismatch
-  Grid.cpp
-  MousePointer.cpp
-c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev29_wip\pathfinding\mousepointer.cpp(7): warning C4305: 'argument': truncation from 'double' to 'T'
-          with
-          [
-              T=float
-          ]
-  Pathfinder.cpp
-c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev29_wip\pathfinding\pathfinder.cpp(150): warning C4018: '<': signed/unsigned mismatch
-c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev29_wip\pathfinding\pathfinder.cpp(224): warning C4018: '<': signed/unsigned mismatch
-  main.cpp
-  Generating Code...
-c:\users\motyl\desktop\sfmlbaseprojecttest\pathfindingsourcev29_wip\pathfinding\gui.cpp(47): warning C4715: 'GUI::GetButtonWithID': not all control paths return a value
-  Pathfinding.vcxproj -> C:\Users\Motyl\Desktop\SFMLBaseProjectTest\PathFindingSourceV29_WIP\Debug\Pathfinding.exe
+  Pathfinding.vcxproj -> C:\Users\Motyl\Desktop\SFMLBaseProjectTest\PathFindingSourceV30_WIP\Debug\Pathfinding.exe

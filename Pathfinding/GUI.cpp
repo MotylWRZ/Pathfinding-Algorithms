@@ -46,10 +46,10 @@ Button* GUI::GetButtonWithID(int pID)
 	}
 }
 
-void GUI::AddButton(sf::Vector2f pSize, std::string pText, int pID, int pTextSize, sf::Color pButtonColor, sf::Color pTextColor, sf::Vector2f pTextOffset)
+void GUI::AddButton(sf::Vector2f pSize, std::string pText, int pID, int pTextSize, sf::Color pButtonColor, sf::Color pTextColor, sf::Vector2f pTextOffset, bool pIsClickable)
 {
 	//Create a button
-	Button* tButton = new Button(pSize, sf::Vector2f(50.0f, 100.0f), pText, pID, pTextSize, pButtonColor, pTextColor, pTextOffset);
+	Button* tButton = new Button(pSize, sf::Vector2f(50.0f, 100.0f), pText, pID, pTextSize, pButtonColor, pTextColor, pTextOffset, pIsClickable);
 	this->m_vecButtons.push_back(tButton);
 
 	// Update the panel and position all buttons
@@ -65,12 +65,16 @@ void GUI::HandleInput(sf::Mouse::Button pButton, bool pPressed, MousePointer& pM
 	{
 		for (auto& tButton : this->m_vecButtons)
 		{
+			// Do nothing with this button if it is not clickable
+			if (!tButton->IsButtonClickable())
+				return;
+
 			if (tButton->GetBoundingBox().intersects(pMousePointer.getBoundingBox()))
 			{
 				// Set all active buttons to inactive
 				for (auto& tButton : this->m_vecButtons)
 				{
-					if (tButton->m_bActive)
+					if (tButton->IsButtonActive())
 					{
 						tButton->SetActive(false);
 					}
