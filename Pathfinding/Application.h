@@ -36,7 +36,7 @@ private:
 	Grid m_grid;
 
 	//Create a pathfinder
-	Pathfinder tPathFinder;
+	Pathfinder m_PathFinder;
 	GUI* m_nodesPanel;
 	GUI* m_algorithmsPanel;
 

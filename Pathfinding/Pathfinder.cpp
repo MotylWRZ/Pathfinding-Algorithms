@@ -32,7 +32,7 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 			//If node is NOT an obstacle, set it an Unvisisted
 			if (!pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_bObstacle)
 			{
-				pGrid.SetNodeAsUnvisited(pGrid.m_vecNodes[y*pGrid.m_GridWidth + x]); // Experimental
+				pGrid.SetNodeAsUnvisited(pGrid.m_vecNodes[y*pGrid.m_GridWidth + x]);
 			}
 			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_gCost = INFINITY;
 			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_hCost = INFINITY;
@@ -102,7 +102,7 @@ void Pathfinder::SolveDijkstra(Grid& pGrid)
 			//If node is NOT an obstacle, set it an Unvisisted
 			if (!pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_bObstacle)
 			{
-				pGrid.SetNodeAsUnvisited(pGrid.m_vecNodes[y*pGrid.m_GridWidth + x]); // Experimental
+				pGrid.SetNodeAsUnvisited(pGrid.m_vecNodes[y*pGrid.m_GridWidth + x]);
 			}
 			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_gCost = INFINITY;
 			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_hCost = INFINITY;
@@ -177,7 +177,7 @@ void Pathfinder::SolveBFS(Grid& pGrid)
 			//If node is NOT an obstacle, set it an Unvisisted
 			if (!pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_bObstacle)
 			{
-				pGrid.SetNodeAsUnvisited(pGrid.m_vecNodes[y*pGrid.m_GridWidth + x]); // Experimental
+				pGrid.SetNodeAsUnvisited(pGrid.m_vecNodes[y*pGrid.m_GridWidth + x]);
 			}
 			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_gCost = INFINITY;
 			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_hCost = INFINITY;
@@ -225,6 +225,26 @@ void Pathfinder::SolveBFS(Grid& pGrid)
 		DrawPath(pGrid);
 	}
 	
+}
+
+
+
+void Pathfinder::Reset(Grid& pGrid)
+{
+	//Reset Navigation graph - default states for all nodes
+	for (int x = 0; x < pGrid.m_GridWidth; x++)
+		for (int y = 0; y < pGrid.m_GridHeight; y++)
+		{
+
+			//If node is NOT an obstacle, set it an Unvisisted
+			if (!pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_bObstacle)
+			{
+				pGrid.SetNodeAsUnvisited(pGrid.m_vecNodes[y*pGrid.m_GridWidth + x]);
+			}
+			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_gCost = INFINITY;
+			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_hCost = INFINITY;
+			pGrid.m_vecNodes[y*pGrid.m_GridWidth + x].m_parentNode = nullptr;
+		}
 }
 
 void Pathfinder::DrawPath(Grid& pGrid)

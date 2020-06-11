@@ -34,7 +34,17 @@ GUI::~GUI()
 	}
 }
 
-
+Button* GUI::GetButtonWithID(int pID)
+{
+	for (auto tBtn : this->m_vecButtons)
+	{
+		if (tBtn->GetID() == pID)
+		{
+			return tBtn;
+			break;
+		}
+	}
+}
 
 void GUI::AddButton(sf::Vector2f pSize, std::string pText, int pID, int pTextSize, sf::Color pButtonColor, sf::Color pTextColor, sf::Vector2f pTextOffset)
 {

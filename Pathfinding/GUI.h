@@ -20,9 +20,12 @@ public:
 	void AddButton(sf::Vector2f pSize, std::string pText, int pID, int pTextSize = 10,
 		sf::Color pButtonColor = sf::Color::White, sf::Color pTextColor = sf::Color::Black,
 		sf::Vector2f pTextOffset = sf::Vector2f(0.0f, 0.0f));
-	inline void SetActiveButton(Button* pButton) { m_activeButtonPtr = pButton; }; //Point to currently active button
-	inline Button* GetActiveButton() { return m_activeButtonPtr; }; // Get a pointer to currently active button
 
+	// Accesors/Mutators
+	inline Button* GetActiveButton() { return m_activeButtonPtr; }; // Get a pointer to currently active button
+    Button* GetButtonWithID(int pID);
+	inline void SetActiveButton(Button* pButton) { m_activeButtonPtr = pButton; pButton->SetActive(true); }; //Point to currently active button
+	
 private:
 	void UpdatePanel();
 
