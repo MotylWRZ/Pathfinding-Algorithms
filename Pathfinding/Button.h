@@ -23,6 +23,7 @@ public:
 	void SetPosition(sf::Vector2f pPosition);
 	void SetActive(bool pActive);
 	inline void SetIsClickable(bool pIsClickable) { m_bIsClickable = pIsClickable; };
+	inline void SetText(std::string pText) { m_buttonText.setString(pText); };
 	
 private:
 	sf::RectangleShape m_rectShape;

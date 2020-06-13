@@ -48,6 +48,7 @@ private:
 	GUI* m_nodesPanel;
 	GUI* m_algorithmsPanel;
 	GUI* m_mainPanel;
+	GUI* m_statsPanel;
 
 	E_PATHDINDER_METHOD m_eCurrentMethod;
 	E_ACTIVE_NODE m_eCurrentNode;

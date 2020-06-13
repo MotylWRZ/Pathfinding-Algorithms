@@ -26,7 +26,7 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	this->m_mousePointer.Initialise(this->m_window);
 
 	//Create a grid of nodes
-	this->m_grid.createGrid(sf::Vector2f(100.0f, 100.0f), 30, 30, sf::Vector2f(17.0f, 17.0f), 1.0f);
+	this->m_grid.createGrid(sf::Vector2f(30.0f, 100.0f), 30, 30, sf::Vector2f(17.0f, 17.0f), 1.0f);
 
 	InitialiseAppGUI();
 
@@ -48,7 +48,12 @@ void Application::Update(sf::Time pDeltaTime)
 	{
 		this->m_grid.DrawNodes(this->m_eCurrentNode, this->m_mousePointer);
 		RunChosenAlgorithm();
+		//Update Stats
+		this->m_statsPanel->GetButtonWithID(0)->SetText("Time Elapsed: " + std::to_string(this->m_PathFinder.GetTimeElapsed()));
+		this->m_statsPanel->GetButtonWithID(1)->SetText("Total Cost: " + std::to_string(this->m_PathFinder.GetTotalCost()));
 	}
+
+	
 }
 
 void Application::Render()
@@ -67,6 +72,7 @@ void Application::Render()
 	this->m_mainPanel->Render(this->m_window);
 	this->m_nodesPanel->Render(this->m_window);
 	this->m_algorithmsPanel->Render(this->m_window);
+	this->m_statsPanel->Render(this->m_window);
 	
 
 	m_window.display();
@@ -249,7 +255,7 @@ void Application::InitialiseAppGUI()
 	this->m_mainPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Exit", E_APP_MENU::E_OPTION_EXIT, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-15.0f, -10.0f));
 
 	// Nodes Panel
-	this->m_nodesPanel = new GUI(sf::Vector2f(700.0f, 110.0f), sf::Vector2f(170.0f, 300.0f));
+	this->m_nodesPanel = new GUI(sf::Vector2f(600.0f, 110.0f), sf::Vector2f(170.0f, 300.0f));
 	//add non clickable button for panel title
 	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 0.0f), "Nodes Panel", 10, 20, sf::Color::Transparent, sf::Color::White, sf::Vector2f(-40.0f, -10.0f), false);
 
@@ -259,7 +265,7 @@ void Application::InitialiseAppGUI()
 	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Remove Obstacle", E_ACTIVE_NODE::E_NODE_NO_OBSTACLE, 15, sf::Color::White, sf::Color::Black, sf::Vector2f(-45.0f, -10.0f));
 
 	// Algorithms Panel
-	this->m_algorithmsPanel = new GUI(sf::Vector2f(900.0f, 110.0f), sf::Vector2f(170.0f, 300.0f));
+	this->m_algorithmsPanel = new GUI(sf::Vector2f(800.0f, 110.0f), sf::Vector2f(170.0f, 300.0f));
 	//add non clickable button for panel title
 	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 0.0f), "Algorithms Panel", 10, 20, sf::Color::Transparent, sf::Color::White, sf::Vector2f(-60.0f, -10.0f), false);
 	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "None", E_PATHDINDER_METHOD::E_NONE, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
@@ -267,4 +273,12 @@ void Application::InitialiseAppGUI()
 	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve A*", E_PATHDINDER_METHOD::E_ASTAR, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
 	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve Dijkstra", E_PATHDINDER_METHOD::E_DIJKSTRA, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-50.0f, -10.0f));
 	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve BFS", E_PATHDINDER_METHOD::E_BREADTH_FIRST, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-40.0f, -10.0f));
+
+	//Create Stats panel
+	this->m_statsPanel = new GUI(sf::Vector2f(1000.0f, 110.0f), sf::Vector2f(210.0f, 200.0f));
+
+	//add non clickable button for panel title
+	this->m_statsPanel->AddButton(sf::Vector2f(100.0f, 0.0f), "Stats", 10, 20, sf::Color::Transparent, sf::Color::White, sf::Vector2f(-20.0f, -10.0f), false);
+	this->m_statsPanel->AddButton(sf::Vector2f(100.0f, 20.0f), "Time Elapsed: 0.0", 0, 20, sf::Color::Transparent, sf::Color::White, sf::Vector2f(-70.0f, -10.0f), false);
+	this->m_statsPanel->AddButton(sf::Vector2f(100.0f, 20.0f), "Total Cost: 0", 1, 20, sf::Color::Transparent, sf::Color::White, sf::Vector2f(-70.0f, -10.0f), false);
 }

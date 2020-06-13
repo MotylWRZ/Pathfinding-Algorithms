@@ -25,6 +25,9 @@ float Pathfinder::CalculateNodesDistance(Node* pNodeA, Node* pNodeB)
 
 void Pathfinder::SolveAStar(Grid& pGrid)
 {
+	//Restart Time
+	this->m_clock.restart();
+
 	//Reset Navigation graph - default states for all nodes
 	for(int x = 0; x < pGrid.GetGridWidth(); x++)
 		for (int y = 0; y < pGrid.GetGridHeight(); y++)
@@ -99,12 +102,18 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 		}
 		
 	}
+	//Update Total Cost
+	SetTotalCost(CalculateNodesDistance(pGrid.GetStartNode(), pGrid.GetEndNode()));
+	//Update Elapsed Time
+	this->m_timeElapsed = this->m_clock.getElapsedTime();
 	// Draw the final path
 	DrawPath(pGrid);
 }
 
 void Pathfinder::SolveDijkstra(Grid& pGrid)
 {
+	//Restart Time
+	this->m_clock.restart();
 	
 	//Reset Navigation graph - default states for all nodes
 	for (int x = 0; x < pGrid.GetGridWidth(); x++)
@@ -174,12 +183,18 @@ void Pathfinder::SolveDijkstra(Grid& pGrid)
 			}
 		}
 	}
+	//Update Total Cost
+	SetTotalCost(CalculateNodesDistance(pGrid.GetStartNode(), pGrid.GetEndNode()));
+	//Update Elapsed Time
+	this->m_timeElapsed = this->m_clock.getElapsedTime();
 	// Draw the final path
 	DrawPath(pGrid);
 }
 
 void Pathfinder::SolveBFS(Grid& pGrid)
 {
+	//Restart Time
+	this->m_clock.restart();
 
 	//Reset Navigation graph - default states for all nodes
 	for (int x = 0; x < pGrid.GetGridWidth(); x++)
@@ -234,8 +249,13 @@ void Pathfinder::SolveBFS(Grid& pGrid)
 			pGrid.SetNodeAsVisited(*tNeighbour);
 			tNeighbour->SetParentNode(tCurrentNode);
 		}
-		DrawPath(pGrid);
 	}
+	//Update Total Cost
+	SetTotalCost(CalculateNodesDistance(pGrid.GetStartNode(), pGrid.GetEndNode()));
+	//Update Elapsed Time
+	this->m_timeElapsed = this->m_clock.getElapsedTime();
+
+	DrawPath(pGrid);
 	
 }
 
