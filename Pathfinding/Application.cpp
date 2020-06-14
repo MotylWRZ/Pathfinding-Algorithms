@@ -20,6 +20,7 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	, m_leftMouseBtnPressed(false)
 	
 	
+	
 
 {
 	//Initialise Mouse Pointer
@@ -37,6 +38,8 @@ Application::~Application()
 {
 	delete this->m_nodesPanel;
 	delete this->m_algorithmsPanel;
+	delete this->m_mainPanel;
+	delete this->m_statsPanel;
 }
 
 void Application::Update(sf::Time pDeltaTime)
@@ -46,6 +49,7 @@ void Application::Update(sf::Time pDeltaTime)
 	// Check whether the left button is still pressed. If it is, perform the node drawing
 	if (this->m_leftMouseBtnPressed)
 	{
+
 		this->m_grid.DrawNodes(this->m_eCurrentNode, this->m_mousePointer);
 		RunChosenAlgorithm();
 		//Update Stats
@@ -133,34 +137,14 @@ void Application::HandleEvent(const sf::Event& pEvent)
 	{
 	case sf::Event::MouseButtonPressed:
 	{
-	
-		// Handle GUI Events
-		this->m_mainPanel->HandleInput(tEvent.mouseButton.button, true, this->m_mousePointer);
-		if (this->m_mainPanel->GetActiveButton())
-		{
-			this->m_eCurrentAppOption = static_cast<E_APP_MENU>(this->m_mainPanel->GetActiveButton()->GetID());
-		}
-
-		this->m_nodesPanel->HandleInput(tEvent.mouseButton.button, true, this->m_mousePointer);
-		//get current active Node and assign the value to ECurrentNode enum (if active button is NOT a nullptr)
-		if (this->m_nodesPanel->GetActiveButton())
-		{
-			this->m_eCurrentNode = static_cast<E_ACTIVE_NODE>(this->m_nodesPanel->GetActiveButton()->GetID());
-		}
-		this->m_algorithmsPanel->HandleInput(tEvent.mouseButton.button, true, this->m_mousePointer);
-		//Get current active Pathfinding method and assign the value to ECurrentMethod enum (if active button is NOT a nullptr)
-		if (this->m_algorithmsPanel->GetActiveButton())
-		{
-			this->m_eCurrentMethod = static_cast<E_PATHDINDER_METHOD>(this->m_algorithmsPanel->GetActiveButton()->GetID());
-		}
-		
 		this->HandleInput(tEvent.mouseButton.button, true);
-
+		
 		break;
 	}
 	case sf::Event::MouseButtonReleased:
 	{
 		this->HandleInput(tEvent.mouseButton.button, false);
+		
 		break;
 	}
 	}
@@ -173,20 +157,41 @@ void Application::HandleInput(sf::Mouse::Button pButton, bool pPressed)
 		{
 		case sf::Mouse::Left:
 		{
+			
 			if (pPressed)
 			{
 				this->m_leftMouseBtnPressed = true;
 
-				
+				// Handle GUI Inputs
+
+				// Main Panel Inputs
+				this->m_mainPanel->HandleInput(pButton, true, this->m_mousePointer);
+				if (this->m_mainPanel->GetActiveButton() != nullptr)
+				{
+					this->m_eCurrentAppOption = static_cast<E_APP_MENU>(this->m_mainPanel->GetActiveButton()->GetID());
+				}
+				//Nodes Panel Inputs
+				this->m_nodesPanel->HandleInput(pButton, true, this->m_mousePointer);
+				//get current active Node and assign the value to ECurrentNode enum (if active button is NOT a nullptr)
+				if (this->m_nodesPanel->GetActiveButton() != nullptr)
+				{
+					this->m_eCurrentNode = static_cast<E_ACTIVE_NODE>(this->m_nodesPanel->GetActiveButton()->GetID());
+				}
+				//Algorithms Panel Inputs
+				this->m_algorithmsPanel->HandleInput(pButton, true, this->m_mousePointer);
+				//Get current active Pathfinding method and assign the value to ECurrentMethod enum (if active button is NOT a nullptr)
+				if (this->m_algorithmsPanel->GetActiveButton() != nullptr)
+				{
+					this->m_eCurrentMethod = static_cast<E_PATHDINDER_METHOD>(this->m_algorithmsPanel->GetActiveButton()->GetID());
+				}
+
 			}
 			else
 			{
 				this->m_leftMouseBtnPressed = false;
-
 				ProcessMenuInputs();
 			}
 		
-
 			break;
 		}
 		case sf::Mouse::Right:
@@ -238,6 +243,11 @@ void Application::ProcessMenuInputs()
 	{
 		break;
 	}
+	case E_APP_MENU::E_OPTION_RESET:
+	{
+		this->Reset();
+		break;
+	}
 	case E_APP_MENU::E_OPTION_EXIT:
 	{
 		this->m_window.close();
@@ -249,20 +259,24 @@ void Application::ProcessMenuInputs()
 void Application::InitialiseAppGUI()
 {
 	//Create GUI
-	this->m_mainPanel = new GUI(sf::Vector2f(800.0f, 470.0f), sf::Vector2f(170.0f, 100.0f));
+
+	//Main Panel
+	this->m_mainPanel = new GUI(sf::Vector2f(800.0f, 470.0f), sf::Vector2f(170.0f, 200.0f));
 	//add non clickable button for panel title
 	this->m_mainPanel->AddButton(sf::Vector2f(100.0f, 0.0f), "MENU", 10, 20, sf::Color::Transparent, sf::Color::White, sf::Vector2f(-30.0f, -10.0f), false);
+	this->m_mainPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Reset", E_APP_MENU::E_OPTION_RESET, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-15.0f, -10.0f));
 	this->m_mainPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Exit", E_APP_MENU::E_OPTION_EXIT, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-15.0f, -10.0f));
+
 
 	// Nodes Panel
 	this->m_nodesPanel = new GUI(sf::Vector2f(600.0f, 110.0f), sf::Vector2f(170.0f, 300.0f));
 	//add non clickable button for panel title
 	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 0.0f), "Nodes Panel", 10, 20, sf::Color::Transparent, sf::Color::White, sf::Vector2f(-40.0f, -10.0f), false);
-
 	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Start", E_ACTIVE_NODE::E_NODE_START, 20, sf::Color::Green, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
 	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set End", E_ACTIVE_NODE::E_NODE_END, 20, sf::Color::Red, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
 	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Set Obstacle", E_ACTIVE_NODE::E_NODE_OBSTACLE, 20, sf::Color::Magenta, sf::Color::White, sf::Vector2f(-40.0f, -10.0f));
 	this->m_nodesPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Remove Obstacle", E_ACTIVE_NODE::E_NODE_NO_OBSTACLE, 15, sf::Color::White, sf::Color::Black, sf::Vector2f(-45.0f, -10.0f));
+
 
 	// Algorithms Panel
 	this->m_algorithmsPanel = new GUI(sf::Vector2f(800.0f, 110.0f), sf::Vector2f(170.0f, 300.0f));
@@ -274,11 +288,27 @@ void Application::InitialiseAppGUI()
 	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve Dijkstra", E_PATHDINDER_METHOD::E_DIJKSTRA, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-50.0f, -10.0f));
 	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve BFS", E_PATHDINDER_METHOD::E_BREADTH_FIRST, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-40.0f, -10.0f));
 
+
 	//Create Stats panel
 	this->m_statsPanel = new GUI(sf::Vector2f(1000.0f, 110.0f), sf::Vector2f(210.0f, 200.0f));
-
 	//add non clickable button for panel title
 	this->m_statsPanel->AddButton(sf::Vector2f(100.0f, 0.0f), "Stats", 10, 20, sf::Color::Transparent, sf::Color::White, sf::Vector2f(-20.0f, -10.0f), false);
 	this->m_statsPanel->AddButton(sf::Vector2f(100.0f, 20.0f), "Time Elapsed: 0.0", 0, 20, sf::Color::Transparent, sf::Color::White, sf::Vector2f(-70.0f, -10.0f), false);
 	this->m_statsPanel->AddButton(sf::Vector2f(100.0f, 20.0f), "Total Cost: 0", 1, 20, sf::Color::Transparent, sf::Color::White, sf::Vector2f(-70.0f, -10.0f), false);
+}
+
+void Application::Reset()
+{
+	//Reset the Navigation Grid
+	this->m_grid.ResetGrid();
+	//Set All buttons as inactive in Main panel and algorithms panel
+	this->m_mainPanel->SetAllButtonsAsInactive();
+	this->m_algorithmsPanel->SetAllButtonsAsInactive();
+
+	// Set current option as NONE in mainPanel and AlgorithmsPanel
+	this->m_eCurrentAppOption = E_APP_MENU::E_OPTION_NONE;
+	this->m_eCurrentMethod = E_PATHDINDER_METHOD::E_NONE;
+	
+	// Set NONE button as active in algorithmsPanel
+	this->m_algorithmsPanel->SetActiveButton(this->m_algorithmsPanel->GetButtonWithID(E_PATHDINDER_METHOD::E_NONE));
 }

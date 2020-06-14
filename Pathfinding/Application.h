@@ -27,7 +27,7 @@ private:
 	void RunChosenAlgorithm();
 	void ProcessMenuInputs();
 	void InitialiseAppGUI();
-
+	void Reset();
 
 
 private:
@@ -55,6 +55,7 @@ private:
 	E_APP_MENU m_eCurrentAppOption;
 
 	bool m_leftMouseBtnPressed;
+	
 	
 	
 };

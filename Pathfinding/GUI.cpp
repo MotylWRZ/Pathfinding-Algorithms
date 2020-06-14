@@ -90,6 +90,22 @@ void GUI::HandleInput(sf::Mouse::Button pButton, bool pPressed, MousePointer& pM
 	}
 }
 
+void GUI::SetAllButtonsAsInactive()
+{
+	//Deactivate All buttons
+	for (auto& tButton : this->m_vecButtons)
+	{
+		tButton->SetActive(false);
+	}
+
+	// Set pointer to current button as a nullptr
+	if (GetActiveButton() != nullptr)
+	{
+		m_activeButtonPtr = nullptr;
+	}
+	
+}
+
 
 void GUI::UpdatePanel()
 {

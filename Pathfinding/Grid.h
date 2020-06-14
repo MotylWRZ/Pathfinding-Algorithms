@@ -17,6 +17,8 @@ public:
 
 	void createGrid(sf::Vector2f pGridPosition,int  pWidth, int pHeight, sf::Vector2f pTileSize, float pTileSpace);
 	void DrawNodes(E_ACTIVE_NODE pActiveNodeType, MousePointer& pMousePointer);
+	void ResetGrid();
+
 	//Accesors/Mutators
 	inline int GetGridWidth() { return m_GridWidth; };
 	inline int GetGridHeight() { return m_GridHeight; };

@@ -33,6 +33,7 @@ Button::~Button()
 
 void Button::SetActive(bool pActive)
 {
+
 	if (pActive)
 	{
 		this->m_rectShape.setOutlineThickness(10);

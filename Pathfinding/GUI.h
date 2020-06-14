@@ -25,6 +25,7 @@ public:
 	inline Button* GetActiveButton() { return m_activeButtonPtr; }; // Get a pointer to currently active button
     Button* GetButtonWithID(int pID);
 	inline void SetActiveButton(Button* pButton) { m_activeButtonPtr = pButton; pButton->SetActive(true); }; //Point to currently active button
+	void SetAllButtonsAsInactive();
 	
 private:
 	void UpdatePanel();

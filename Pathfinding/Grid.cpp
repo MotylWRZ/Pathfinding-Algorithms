@@ -84,16 +84,24 @@ void Grid::createGrid(sf::Vector2f pGridPosition, int pWidth, int pHeight, sf::V
 				m_vecNodes[y*pWidth + x].GetNeighbours().push_back(&m_vecNodes[(y + 1) * pWidth + (x + 1)]);
 			}
 		}
-
-	
-	
-
 	//Manually position the starting and ending nodes so they are no longer nullptr
 	m_startNode = &m_vecNodes[(pHeight / 2) * pWidth + 1];
 	m_endNode = &m_vecNodes[(pHeight / 2) * pWidth + pWidth - 2];
 
 	m_startNode->GetShape().setFillColor(sf::Color::Green);
 	m_endNode->GetShape().setFillColor(sf::Color::Red);
+}
+
+void Grid::ResetGrid()
+{
+	for (auto& tNode : this->m_vecNodes)
+	{
+		if (&tNode != m_endNode && &tNode != m_startNode)
+		{
+			SetNodeAsNonObstacle(tNode);
+			SetNodeAsUnvisited(tNode);
+		}
+	}
 }
 
 
