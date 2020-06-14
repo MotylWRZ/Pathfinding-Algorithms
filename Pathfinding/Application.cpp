@@ -264,8 +264,8 @@ void Application::InitialiseAppGUI()
 	this->m_mainPanel = new GUI(sf::Vector2f(800.0f, 470.0f), sf::Vector2f(170.0f, 200.0f));
 	//add non clickable button for panel title
 	this->m_mainPanel->AddButton(sf::Vector2f(100.0f, 0.0f), "MENU", 10, 20, sf::Color::Transparent, sf::Color::White, sf::Vector2f(-30.0f, -10.0f), false);
-	this->m_mainPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Reset", E_APP_MENU::E_OPTION_RESET, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-15.0f, -10.0f));
-	this->m_mainPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Exit", E_APP_MENU::E_OPTION_EXIT, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-15.0f, -10.0f));
+	this->m_mainPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Reset", E_APP_MENU::E_OPTION_RESET, 20, sf::Color(65, 105, 225), sf::Color::White, sf::Vector2f(-15.0f, -10.0f));
+	this->m_mainPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Exit", E_APP_MENU::E_OPTION_EXIT, 20, sf::Color(65, 105, 225), sf::Color::White, sf::Vector2f(-15.0f, -10.0f));
 
 
 	// Nodes Panel
@@ -282,11 +282,11 @@ void Application::InitialiseAppGUI()
 	this->m_algorithmsPanel = new GUI(sf::Vector2f(800.0f, 110.0f), sf::Vector2f(170.0f, 300.0f));
 	//add non clickable button for panel title
 	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 0.0f), "Algorithms Panel", 10, 20, sf::Color::Transparent, sf::Color::White, sf::Vector2f(-60.0f, -10.0f), false);
-	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "None", E_PATHDINDER_METHOD::E_NONE, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
+	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "None", E_PATHDINDER_METHOD::E_NONE, 20, sf::Color(65, 105, 225), sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
 	this->m_algorithmsPanel->SetActiveButton(this->m_algorithmsPanel->GetButtonWithID(E_PATHDINDER_METHOD::E_NONE)); // set this button as a default active button
-	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve A*", E_PATHDINDER_METHOD::E_ASTAR, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
-	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve Dijkstra", E_PATHDINDER_METHOD::E_DIJKSTRA, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-50.0f, -10.0f));
-	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve BFS", E_PATHDINDER_METHOD::E_BREADTH_FIRST, 20, sf::Color::Black, sf::Color::White, sf::Vector2f(-40.0f, -10.0f));
+	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve A*", E_PATHDINDER_METHOD::E_ASTAR, 20, sf::Color(65, 105, 225), sf::Color::White, sf::Vector2f(-30.0f, -10.0f));
+	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve Dijkstra", E_PATHDINDER_METHOD::E_DIJKSTRA, 20, sf::Color(65, 105, 225), sf::Color::White, sf::Vector2f(-50.0f, -10.0f));
+	this->m_algorithmsPanel->AddButton(sf::Vector2f(100.0f, 50.0f), "Solve BFS", E_PATHDINDER_METHOD::E_BREADTH_FIRST, 20, sf::Color(65, 105, 225), sf::Color::White, sf::Vector2f(-40.0f, -10.0f));
 
 
 	//Create Stats panel
