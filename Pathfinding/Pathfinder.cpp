@@ -32,7 +32,6 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 	for(int x = 0; x < pGrid.GetGridWidth(); x++)
 		for (int y = 0; y < pGrid.GetGridHeight(); y++)
 		{
-			
 			//If node is NOT an obstacle, set it an Unvisisted
 			if (!pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].IsObstacle())
 			{
@@ -50,9 +49,9 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 	pGrid.GetStartNode()->SetHCost(CalculateNodesDistance(pGrid.GetStartNode(), pGrid.GetEndNode())); //Calculate heuristic
 	
 
-	typedef std::pair<float, Node*> tNodeDistPair; // Create a pair with float(gCost) and Node pointer)
+	typedef std::pair<float, Node*> tNodeDistPair; // Create a pair with float(hCost) and Node pointer)
 	tNodeDistPair tCurrentNodePair;
-	tCurrentNodePair = std::make_pair(tCurrentNode->GetHCost(), tCurrentNode); // make a pair of the Gcost and the Current node
+	tCurrentNodePair = std::make_pair(tCurrentNode->GetHCost(), tCurrentNode); // make a pair of the hCost and the pointer to Current node
 
 	//Add a priority queue for notVisited nodes and add to it a startNodePair
 	std::priority_queue<tNodeDistPair, std::vector<tNodeDistPair>, std::greater<tNodeDistPair>> tListNotVisitedNodes;
@@ -62,11 +61,11 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 	while (!tListNotVisitedNodes.empty() && tCurrentNode != pGrid.GetEndNode())
 	{
 		
-		// Go to the node with the lowest cost (top() will return the element with the lowest first valuie (float gCost))
+		// Go to the node with the lowest cost (top() will return the element with the lowest first valuie (float hCost))
 		tCurrentNode = tListNotVisitedNodes.top().second;
-		// Set a current NodePair from the CurrentNode and its gCost
+		// Set a current NodePair from the CurrentNode and its hCost
 		tCurrentNodePair = std::make_pair(tCurrentNode->GetHCost(), tCurrentNode);
-		//Dequeue the top element (the one with the lowest gCost)
+		//Dequeue the top element (the one with the lowest hCost)
 		tListNotVisitedNodes.pop();
 		//Set the current node as visited
 		pGrid.SetNodeAsVisited(*tCurrentNode);
@@ -92,7 +91,7 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 				tNodeNeighbour->SetHCost(tNodeNeighbour->GetGCost() + CalculateNodesDistance(tNodeNeighbour, pGrid.GetEndNode()));
 				// Set the parent node as the current node for this neighbour
 				tNeighbour->SetParentNode(tCurrentNode);
-				// Set the currentNodePair as the current neigbour's gCost and the pointer to it
+				// Set the currentNodePair as the current neigbour's hCost and the pointer to the node
 				tCurrentNodePair = std::make_pair(tNeighbour->GetHCost(), tNeighbour);
 				// Enqueue the currentNodePair
 				tListNotVisitedNodes.push(tCurrentNodePair);
@@ -235,7 +234,6 @@ void Pathfinder::SolveBFS(Grid& pGrid)
 		{
 			break;
 		}
-
 		for (int i = 0; i < tCurrentNode->GetNeighbours().size(); ++i)
 		{
 			Node* tNeighbour= tCurrentNode->GetNeighbours()[i];
@@ -244,7 +242,6 @@ void Pathfinder::SolveBFS(Grid& pGrid)
 			{
 				continue;
 			}
-
 			tOpenlist.push(tNeighbour);
 			pGrid.SetNodeAsVisited(*tNeighbour);
 			tNeighbour->SetParentNode(tCurrentNode);
@@ -271,7 +268,6 @@ void Pathfinder::Reset(Grid& pGrid)
 	for (int x = 0; x < pGrid.GetGridWidth(); x++)
 		for (int y = 0; y < pGrid.GetGridHeight(); y++)
 		{
-
 			//If node is NOT an obstacle, set it an Unvisisted
 			if (!pGrid.GetNodes()[y*pGrid.GetGridWidth() + x].IsObstacle())
 			{
