@@ -88,6 +88,7 @@ void Grid::createGrid(sf::Vector2f pGridPosition, int pWidth, int pHeight, sf::V
 	m_startNode = &m_vecNodes[(pHeight / 2) * pWidth + 1];
 	m_endNode = &m_vecNodes[(pHeight / 2) * pWidth + pWidth - 2];
 
+	//Set the initial colors for start and end nodes
 	m_startNode->GetShape().setFillColor(sf::Color::Green);
 	m_endNode->GetShape().setFillColor(sf::Color::Red);
 }
@@ -96,6 +97,7 @@ void Grid::ResetGrid()
 {
 	for (auto& tNode : this->m_vecNodes)
 	{
+		// Reset the node if it is not a start/end node
 		if (&tNode != m_endNode && &tNode != m_startNode)
 		{
 			SetNodeAsNonObstacle(tNode);
@@ -113,6 +115,8 @@ void Grid::SetNewStartNode(Node& pNode)
 	this->m_startNode = nullptr;
 	// Point to a new start node
 	this->m_startNode = &pNode;
+
+	//Set the color of this node as Green
 	pNode.GetShape().setFillColor(sf::Color::Green);
 }
 
@@ -124,6 +128,8 @@ void Grid::SetNewEndNode(Node& pNode)
 	this->m_endNode = nullptr;
 	// Point to a new end node
 	this->m_endNode = &pNode;
+
+	//Set the color of this node as Red
 	pNode.GetShape().setFillColor(sf::Color::Red);
 }
 

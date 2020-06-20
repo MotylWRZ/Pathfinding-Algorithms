@@ -60,7 +60,6 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 
 	while (!tListNotVisitedNodes.empty() && tCurrentNode != pGrid.GetEndNode())
 	{
-		
 		// Go to the node with the lowest cost (top() will return the element with the lowest first valuie (float hCost))
 		tCurrentNode = tListNotVisitedNodes.top().second;
 		// Set a current NodePair from the CurrentNode and its hCost

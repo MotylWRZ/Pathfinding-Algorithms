@@ -29,6 +29,7 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	//Create a grid of nodes
 	this->m_grid.createGrid(sf::Vector2f(30.0f, 100.0f), 30, 30, sf::Vector2f(17.0f, 17.0f), 1.0f);
 
+	//Initialise the GUI elements
 	InitialiseAppGUI();
 
 }
@@ -36,6 +37,7 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 
 Application::~Application()
 {
+	//Clear the memory from GUI elements
 	delete this->m_nodesPanel;
 	delete this->m_algorithmsPanel;
 	delete this->m_mainPanel;
@@ -49,8 +51,9 @@ void Application::Update(sf::Time pDeltaTime)
 	// Check whether the left button is still pressed. If it is, perform the node drawing
 	if (this->m_leftMouseBtnPressed)
 	{
-
+		//Perform Node drawing
 		this->m_grid.DrawNodes(this->m_eCurrentNode, this->m_mousePointer);
+		// Calculate and display the path using chosen algorithm
 		RunChosenAlgorithm();
 		//Update Stats
 		this->m_statsPanel->GetButtonWithID(0)->SetText("Time Elapsed: " + std::to_string(this->m_PathFinder.GetTimeElapsed()));
