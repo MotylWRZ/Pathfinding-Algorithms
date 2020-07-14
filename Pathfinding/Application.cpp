@@ -19,9 +19,6 @@ Application::Application(int pWindowWidth, int pWindowHeight)
 	, m_eCurrentAppOption(E_APP_MENU::E_OPTION_NONE)
 	, m_leftMouseBtnPressed(false)
 	
-	
-	
-
 {
 	//Initialise Mouse Pointer
 	this->m_mousePointer.Initialise(this->m_window);

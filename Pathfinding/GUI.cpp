@@ -8,17 +8,11 @@ GUI::GUI(sf::Vector2f pPosition, sf::Vector2f pSize)
 	, m_activeButtonPtr(nullptr)
 {
 	
-
-
-	
 	this->m_menuPanel.setSize(pSize);
-	//this->m_menuPanel.setOrigin(sf::Vector2f(m_menuPanel.getSize().x / 2, m_menuPanel.getSize().y / 2));
 	this->m_menuPanel.setFillColor(sf::Color(128, 128, 128));
 	this->m_menuPanel.setOutlineColor(sf::Color(119, 136, 153));
 	this->m_menuPanel.setOutlineThickness(10);
 	this->m_menuPanel.setPosition(pPosition);
-
-
 
 }
 
@@ -123,6 +117,7 @@ void GUI::UpdatePanel()
 
 void GUI::Render(sf::RenderWindow& pWindow)
 {
+	// Render all GUI elements
 	pWindow.draw(this->m_menuPanel);
 	
 	for (auto tButton : this->m_vecButtons)
