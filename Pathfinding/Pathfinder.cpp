@@ -62,8 +62,8 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 	{
 		// Go to the node with the lowest cost (top() will return the element with the lowest first valuie (float hCost))
 		tCurrentNode = tListNotVisitedNodes.top().second;
-		// Set a current NodePair from the CurrentNode and its hCost
-		tCurrentNodePair = std::make_pair(tCurrentNode->GetHCost(), tCurrentNode);
+		// Set a current NodePair from the CurrentNode and its fCost
+		tCurrentNodePair = std::make_pair(tCurrentNode->GetFCost(), tCurrentNode);
 		//Dequeue the top element (the one with the lowest hCost)
 		tListNotVisitedNodes.pop();
 		//Set the current node as visited
@@ -87,11 +87,11 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 				// Update the gCost of this neighbour 
 				tNeighbour->SetGCost(tLowerGoal);
 				//Calculate heuristic between neighbour and endNode
-				tNodeNeighbour->SetHCost(tNodeNeighbour->GetGCost() + CalculateNodesDistance(tNodeNeighbour, pGrid.GetEndNode()));
+				tNodeNeighbour->SetHCost(CalculateNodesDistance(tNodeNeighbour, pGrid.GetEndNode()));
 				// Set the parent node as the current node for this neighbour
 				tNeighbour->SetParentNode(tCurrentNode);
-				// Set the currentNodePair as the current neigbour's hCost and the pointer to the node
-				tCurrentNodePair = std::make_pair(tNeighbour->GetHCost(), tNeighbour);
+				// Set the currentNodePair as the current neigbour's fCost and the pointer to the node
+				tCurrentNodePair = std::make_pair(tNeighbour->GetFCost(), tNeighbour);
 				// Enqueue the currentNodePair
 				tListNotVisitedNodes.push(tCurrentNodePair);
 				// Set this neighbour as visisted node

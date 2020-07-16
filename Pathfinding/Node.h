@@ -11,6 +11,7 @@ public:
 	inline Node* getParentNode() { return m_parentNode; };
 	inline float GetGCost() { return m_gCost; };
 	inline float GetHCost() { return m_hCost; };
+	inline float GetFCost() { return m_fCost = m_gCost + m_hCost; };
 	inline std::vector<Node*>& GetNeighbours() { return m_vecNeighbours; };
 	inline sf::Vector2f GetPosition() { return m_position; };
 	inline sf::RectangleShape& GetShape() { return m_rectShape; };
@@ -30,6 +31,7 @@ private:
 	
 	float m_gCost; // Distance from starting point	
 	float m_hCost; // Distance from endNode
+	float m_fCost; // gCost and hCost combined
 
 	Node* m_parentNode; // Pointer to parent node (previous node)
 

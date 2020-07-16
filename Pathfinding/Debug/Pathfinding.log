@@ -1,19 +1,4 @@
-﻿  Application.cpp
-  Button.cpp
-  Grid.cpp
-  GUI.cpp
-d:\game development\myprojectsc++\sfmlbaseprojecttest\pathfindingsourcev38_wip\pathfinding\gui.cpp(29): warning C4018: '<': signed/unsigned mismatch
-  main.cpp
-  MousePointer.cpp
-d:\game development\myprojectsc++\sfmlbaseprojecttest\pathfindingsourcev38_wip\pathfinding\mousepointer.cpp(7): warning C4305: 'argument': truncation from 'double' to 'T'
-          with
-          [
-              T=float
-          ]
-  Node.cpp
-  Pathfinder.cpp
+﻿  Pathfinder.cpp
 d:\game development\myprojectsc++\sfmlbaseprojecttest\pathfindingsourcev38_wip\pathfinding\pathfinder.cpp(157): warning C4018: '<': signed/unsigned mismatch
 d:\game development\myprojectsc++\sfmlbaseprojecttest\pathfindingsourcev38_wip\pathfinding\pathfinder.cpp(236): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-d:\game development\myprojectsc++\sfmlbaseprojecttest\pathfindingsourcev38_wip\pathfinding\gui.cpp(47): warning C4715: 'GUI::GetButtonWithID': not all control paths return a value
   Pathfinding.vcxproj -> D:\Game Development\MyProjectsC++\SFMLBaseProjectTest\PathFindingSourceV38_WIP\Debug\Pathfinding.exe
