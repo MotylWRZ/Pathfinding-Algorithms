@@ -49,9 +49,9 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 	pGrid.GetStartNode()->SetHCost(CalculateNodesDistance(pGrid.GetStartNode(), pGrid.GetEndNode())); //Calculate heuristic
 	
 
-	typedef std::pair<float, Node*> tNodeDistPair; // Create a pair with float(hCost) and Node pointer)
+	typedef std::pair<float, Node*> tNodeDistPair; // Create a pair with float(fCost) and Node pointer)
 	tNodeDistPair tCurrentNodePair;
-	tCurrentNodePair = std::make_pair(tCurrentNode->GetHCost(), tCurrentNode); // make a pair of the hCost and the pointer to Current node
+	tCurrentNodePair = std::make_pair(tCurrentNode->GetFCost(), tCurrentNode); // make a pair of the fCost and the pointer to Current node
 
 	//Add a priority queue for notVisited nodes and add to it a startNodePair
 	std::priority_queue<tNodeDistPair, std::vector<tNodeDistPair>, std::greater<tNodeDistPair>> tListNotVisitedNodes;
