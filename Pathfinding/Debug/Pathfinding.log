@@ -1,4 +1,4 @@
 ﻿  Pathfinder.cpp
-d:\game development\myprojectsc++\sfmlbaseprojecttest\pathfindingsourcev38_wip\pathfinding\pathfinder.cpp(157): warning C4018: '<': signed/unsigned mismatch
-d:\game development\myprojectsc++\sfmlbaseprojecttest\pathfindingsourcev38_wip\pathfinding\pathfinder.cpp(236): warning C4018: '<': signed/unsigned mismatch
+d:\game development\myprojectsc++\sfmlbaseprojecttest\pathfindingsourcev38_wip\pathfinding\pathfinder.cpp(155): warning C4018: '<': signed/unsigned mismatch
+d:\game development\myprojectsc++\sfmlbaseprojecttest\pathfindingsourcev38_wip\pathfinding\pathfinder.cpp(232): warning C4018: '<': signed/unsigned mismatch
   Pathfinding.vcxproj -> D:\Game Development\MyProjectsC++\SFMLBaseProjectTest\PathFindingSourceV38_WIP\Debug\Pathfinding.exe

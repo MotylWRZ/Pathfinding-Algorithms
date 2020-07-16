@@ -100,8 +100,6 @@ void Pathfinder::SolveAStar(Grid& pGrid)
 		}
 		
 	}
-	//Update Total Cost
-	SetTotalCost(CalculateNodesDistance(pGrid.GetStartNode(), pGrid.GetEndNode()));
 	//Update Elapsed Time
 	this->m_timeElapsed = this->m_clock.getElapsedTime();
 	// Draw the final path
@@ -181,8 +179,6 @@ void Pathfinder::SolveDijkstra(Grid& pGrid)
 			}
 		}
 	}
-	//Update Total Cost
-	SetTotalCost(CalculateNodesDistance(pGrid.GetStartNode(), pGrid.GetEndNode()));
 	//Update Elapsed Time
 	this->m_timeElapsed = this->m_clock.getElapsedTime();
 	// Draw the final path
@@ -246,8 +242,6 @@ void Pathfinder::SolveBFS(Grid& pGrid)
 			tNeighbour->SetParentNode(tCurrentNode);
 		}
 	}
-	//Update Total Cost
-	SetTotalCost(CalculateNodesDistance(pGrid.GetStartNode(), pGrid.GetEndNode()));
 	//Update Elapsed Time
 	this->m_timeElapsed = this->m_clock.getElapsedTime();
 
@@ -282,15 +276,31 @@ void Pathfinder::Reset(Grid& pGrid)
 
 void Pathfinder::DrawPath(Grid& pGrid)
 {
+	// Temp variable to store the path cost
+	float tCost = 0;
+
 	if (pGrid.GetEndNode() != nullptr)
 	{
+		// Temp pointer whicch points to EndNode
 		Node* tPath = pGrid.GetEndNode();
-		
+
+		// Add the distance between current path node and its parent node to current path cost
+		tCost += CalculateNodesDistance(tPath, tPath->getParentNode());
+
+		// Draw the path between all path nodes going from the end node to the start node
+		// Calculate the path cost
 		while (tPath->getParentNode() != nullptr && tPath->getParentNode() != pGrid.GetStartNode())
 		{
+			// Add the distance between current path node and its parent node to current path costs
+			tCost += CalculateNodesDistance(tPath, tPath->getParentNode());
+
+			// Change the color of the path node
 			tPath->getParentNode()->GetShape().setFillColor(sf::Color::Blue);
 			tPath = tPath->getParentNode();
 		}
+
+		//Update Total Cost
+		m_totalCost = tCost;
 
 		this->m_bPathDrawn = true;
 	}
